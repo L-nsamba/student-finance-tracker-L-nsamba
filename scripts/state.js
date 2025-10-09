@@ -1,0 +1,1 @@
+//Contains application state management functions

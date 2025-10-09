@@ -1,0 +1,1 @@
+//Contains search & highlighting functions

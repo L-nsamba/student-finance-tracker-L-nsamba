@@ -1,0 +1,1 @@
+//Contains localStorage functions

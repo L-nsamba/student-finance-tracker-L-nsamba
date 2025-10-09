@@ -1,0 +1,10 @@
+h1{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: 10px solid ;
+    width: 50%;
+}
+p:hover{
+    background-color: red;
+    display: inline;
+    font-size: 2rem;
+}
