@@ -9,8 +9,103 @@
 </head>
 <body>
 
-    <h1>Student Finance Tracker - Currently Under Development</h1>
-    <p>This is a GitHub Pages Deployment Test</p>
+
+    <header>
+        <h1>Student Finance Tracker</h1>
+        <p>Small Steps, Big Savings</p>
+
+        <nav class="nav-bar">
+            <!--Creation of the nav bar that will contain links to
+            display corresponding output upon the users request.
+            The functionality will be implemented with JS-->
+            <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="#table" class="nav-link">Table View</a></li>
+                <li><a href="#add-form" class="nav-link">Add Transaction</a></li>
+                <li><a href="#card-view" class="nav-link">Card View</a></li>
+                <li><a href="#settings" class="nav-link">Settings</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="dashboard" class="page-section active">
+
+            <!--This section contains the dashboard overview
+            and what the user originally sees before selecting
+            a given option in the user menu-->
+
+            <div class="analytics-container">
+
+                <div id="total_spend">
+                    <h3>Total Spend</h3>
+                </div>
+
+                <div id="monthly_budget">
+                    <h3>Monthly budget</h3>
+                </div>
+
+                <div id="total_no_of_transactions">
+                    <h3>Total No of Transaction</h3>
+                </div>
+
+                <div id="top_category">
+                    <h3>Top Category</h3>
+                </div>
+
+                <div id="last_seven_days">
+                    <h3>Last 7 days</h3>
+                </div>
+
+                <div id="recent_transactions">
+                    <h3>Recent Transactions</h3>
+                </div>
+
+            </div>
+        </section>
+
+
+
+
+        <!--The sections below are hidden in the menu and
+        when menu option is clicked it adjusts the screen
+        output with the help of JS-->
+
+        <section id="table" class="page-section hidden">
+            <h2>All Transactions</h2>
+
+            <table>
+                <!--table that will contain that relevant data-->
+            </table>
+
+        </section>
+
+        <section id="add-form" class="page-section hidden">
+            <h2>Add New Transactions</h2>
+
+            <form>
+                <!--form will allow user to add new info-->
+            </form>
+
+        </section>
+
+        <section id="settings" class="page-section hidden">
+            <h2>Settings</h2>
+
+                <!--settings content will appear here-->
+
+        </section>
+
+        <section id="about" class="page-section hidden">
+            <h2>About</h2>
+            <!--about content-->
+        </section>
+
+    </main>
 
 
 
