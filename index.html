@@ -41,12 +41,15 @@
 
             <div class="analytics-container">
 
-                <div id="total_spend">
+                <div id="total_spend" class="stat-card">
                     <h3>Total Spend</h3>
+                    <p class="stat-value"> UGX 200,000 </p>
                 </div>
 
-                <div id="monthly_budget">
+                <div id="monthly_budget" class="stat-card">
                     <h3>Monthly budget</h3>
+                    <p class="stat-value">UGX 245,000 </p>
+                    <p class="budget-remaining">UGX 45,000 remaining </p>
                 </div>
 
                 <div id="total_no_of_transactions">
@@ -80,6 +83,37 @@
 
             <table>
                 <!--table that will contain that relevant data-->
+                <div class="search-container" id="search-input" placeholder="Search transactions...">
+                    <input type="text">
+                </div>
+
+                <table class="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!--js will populate-->
+                        <tr>
+                            <td>Sample transactions</td>
+                            <td>UGX 15,000</td>
+                            <td>Food</td>
+                            <td>2025-10-09</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
             </table>
 
         </section>
@@ -87,23 +121,74 @@
         <section id="add-form" class="page-section hidden">
             <h2>Add New Transactions</h2>
 
-            <form>
+            <form id="transactions-form">
                 <!--form will allow user to add new info-->
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" required>
+                    <div class="error-message" id="description-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" step="100" required>
+                    <div class="error-message" id="amount-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" required>
+                        <option value="">Select a category</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Books">Books</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Add Transaction</button>
             </form>
 
         </section>
 
         <section id="settings" class="page-section hidden">
             <h2>Settings</h2>
-
                 <!--settings content will appear here-->
+                <form id="settings-form">
+                    <div class="form-group">
+                        <label for="currency">Default Currency:</label>
+                        <select id="currency">
+                            <option value="UGX">UGX</option>
+                            <option value="KSH">KSH</option>
+                            <option value="RWF">RWF</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="monthly-budget">Monthly Budget:</label>
+                        <input type="number" id="monthly-budget" step="100">
+                    </div>
+                </form>
 
         </section>
 
         <section id="about" class="page-section hidden">
             <h2>About</h2>
             <!--about content-->
+
+            <p>Student Finance Tracker - Small Steps, Big Savings</p>
+            <p>Created by Leon Nsamba</p>
+            <p>Contact: l.nsamba@alustudent.com</p>
+            <p>GitHub: L-nsamba</p>
         </section>
+
+
 
     </main>
 
