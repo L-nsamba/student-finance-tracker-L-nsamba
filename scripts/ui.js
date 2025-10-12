@@ -48,3 +48,50 @@ export function closeMobileMenu(){
     const navMenu = document.querySelector('.nav-menu');
     navMenu.classList.remove('active');
 }
+
+export function renderTable(transactions){
+    const tbody = document.querySelector('.transactions-table tbody');
+
+    //Returns error message if transaction table is empty
+    if (transactions.length === 0){
+        tbody.innerHTML = '<tr><td colspan="5"> No transactions yet</td></tr>';
+        return;
+    }
+
+    //Returns the transaction items if has added any yet
+    tbody.innerHTML = transactions.map(transaction => `
+        <tr>
+            <td>${transaction.description}</td>
+            <td>${transaction.amount.toLocaleString()}</td>
+            <td>${transaction.category}</td>
+            <td>${transaction.date}</td>
+            <td>
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+            </td>
+        </tr>`).join('');
+}
+
+export function updateDashboard(stats){
+    //Updates dashboard elements
+
+    const totalSpendElement = document.querySelector('#total_spend .stat-value');
+    const totalTransactionsElement = document.querySelector('#total_no_of_transactions');
+    const topCategoryElement = document.querySelector('#top_category');
+
+    if (totalSpendElement){
+        totalSpendElement.textContent = `UGX ${stats.totalSpend.toLocaleString()}`
+    }
+
+    if (totalTransactionsElement){
+        totalTransactionsElement.innerHTML = `
+        <h3>Total Transactions</h3>
+        <p class="stat-value">${stats.totalTransactions}</p>`;
+    }
+
+    if (topCategoryElement){
+        topCategoryElement.innerHTML = `
+        <h3>Top Category</h3>
+        <p class="stat-value"><${stats.topCategory}</p>`;
+    }
+}
