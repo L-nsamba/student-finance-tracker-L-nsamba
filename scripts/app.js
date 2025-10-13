@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function updateBudgetDisplay(settings){
+    //Function contains the logic to adjust the monthly budget and total spend
+    //It also carries out the  calculations for amount remaining
     const monthlyBudgetElement = document.querySelector('#monthly_budget .stat-value');
 
     const budgetRemainingElement = document.querySelector('#monthly_budget .budget-remaining');
@@ -28,10 +30,12 @@ function updateBudgetDisplay(settings){
         const stats = getDashboardStats();
 
 
+
         const monthlyBudget = settings.monthlyBudget || 0;
         const totalSpend = stats.totalSpend || 0;
         const remaining = monthlyBudget - totalSpend;
 
+        //Displays monthly budget numeric value
         monthlyBudgetElement.textContent = `${settings.defaultCurrency} ${monthlyBudget.toLocaleString()}`;
 
         if (remaining >= 0){
