@@ -3,6 +3,7 @@
 import { addTransaction, getDashboardStats, getTransactions } from "./state.js";
 import { showSection, setupNavigation, renderTable, updateDashboard } from "./ui.js";
 import { saveSettings, loadSettings } from "./storage.js";
+import { validateTransaction } from "./validators.js";
 
 document.addEventListener('DOMContentLoaded', function(){
     setupNavigation();
@@ -74,6 +75,18 @@ function handleTransactionSubmit(event){
 
     };
 
+    const validationResult = validateTransaction(transaction)
+
+    if(!validationResult.isValid){
+        clearErrorMessages();
+        validationResult.errors.forEach(error => {
+            showError(error.field, error.message);
+        });
+        return;
+    }
+
+    clearErrorMessages();
+
     addTransaction(transaction);
 
     event.target.reset();
@@ -89,6 +102,22 @@ function handleTransactionSubmit(event){
 
     //Updates the dashboard overview
     showSection('dashboard');
+}
+
+function clearErrorMessages(){
+    document.querySelectorAll('error-message').forEach(error => {
+        error.textContent = '';
+        error.style.display = 'none';
+    });
+}
+
+function showError(field, message){
+    const errorElement = document.getElementById(`${field}-error`);
+
+    if (errorElement){
+        errorElement.textContent = message;
+        errorElement.style.display = 'block'
+    }
 }
 
 function handleSettingsSubmit(event){

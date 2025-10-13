@@ -22,7 +22,7 @@ export function validateDescription(description){
 export function validateAmount(amount){
 
     //Ensures amount is not left empty
-    if(!amount && amount !==0){
+    if(!amount && amount !== 0){
         return{
             isValid: false,
             message: 'Amount is required'

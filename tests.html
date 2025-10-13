@@ -1,1 +1,97 @@
 <!--Contains the regex test page-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Tests - Finance Tracker</title>
+    <style>
+        body {font-family: Verdana, Geneva, Tahoma, sans-serif;}
+        .test {margin: 10px 0 ; padding: 10px; border-left: 4px solid #ccc;}
+        .pass {border-color: green; background-color: #f0fff0;}
+        .fail {border-color: red; background-color: orange;}
+        .test-section { margin: 20px 0;}
+    </style>
+</head>
+<body>
+    <h1>Regex Validation Tests</h1>
+    <p>This page tests the regex patterns used in this web app</p>
+
+    <div id="tests">
+        <!--Js will populate the tests-->
+    </div>
+
+    <script type="module">
+
+        import {
+            validateDescription,
+            validateAmount,
+            validateDate,
+            validateCategory,
+            validateDescriptionStrength,
+            validateNoDuplicateWords
+        } from './scripts/validators.js'
+
+        function runTest(validator, input, expected, testName){
+            //Function will add the html content defined below to the web page
+            const result = validator(input);
+            const passed = result.isValid === expected;
+
+            const testDiv = document.createElement('div');
+            testDiv.className = `test ${passed ? 'pass' : 'fail'}`;
+            testDiv.innerHTML =  `
+            <strong>${testName}</strong><br>
+            <strong>Input: </strong>"${input}"<br>
+            <strong>Expected: </strong>${expected ? 'VALID' : 'INVALID'}<br>
+            <strong>Actual: </strong>${result.isValid ? 'VALID' : 'INVALID'}<br>
+            <strong>Message: </strong>${result.message}<br>
+            `;
+
+            return testDiv;
+        }
+
+        const testsContainer = document.getElementById('tests');
+
+        const descSection = document.createElement('div');
+        descSection.className = 'test-section';
+        descSection.innerHTML = '<h2>Description Validation Tests</h2>';
+
+
+        //Description tests
+        const descTests = [
+            ['Breakfast at mall', true, 'Normal description'],
+            [' Supper', false, 'Leading spaces'],
+            ['Dinner ', false, 'Trailing spaces'],
+            ['', false, 'Empty description'],
+            ['Cake', true, 'Single word'],
+            ['Dinner with siblings', true, 'Multiple words']
+        ];
+
+        descTests.forEach(([input, expected, name]) => {
+            descSection.appendChild(runTest(validateDescription, input, expected, name));
+        });
+        testsContainer.appendChild(descSection);
+
+        const amountSection = document.createElement('div');
+        amountSection.className = 'test-section';
+        amountSection.innerHTML = '<h2>Amount Validation Tests</h2>'
+
+        //Amount tests
+        const amountTests = [
+            ['4060', true, 'Whole number'],
+            ['24.90', true, 'With decimal'],
+            ['90.999', false, 'Too many decimals'],
+            ['0', true, 'Zero amount'],
+            ['-900', false, 'Negative number'],
+            ['041', false, 'Leading zero']
+        ];
+
+        amountTests.forEach(([input, expected, name]) => {
+            amountSection.appendChild(runTest(validateAmount, input, expected, name));
+
+        });
+        testsContainer.appendChild(amountSection);
+    </script>
+
+</body>
+</html>
