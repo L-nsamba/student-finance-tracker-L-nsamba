@@ -57,6 +57,15 @@ export function getDefaultSettings(){
 
 export function saveSettings(settings){
     try{
+        //debug
+        console.log('Saved settings to localStorage', settings)
+        //debug
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+
+        //debug
+        const verify = localStorage.getItem(SETTINGS_KEY);
+        console.log('Verified saved settings', verify)
+        //debug
 
         return true;
     } catch (error){
@@ -70,13 +79,22 @@ export function loadSettings(){
     try{
         const stored = localStorage.getItem(SETTINGS_KEY);
 
-        return stored ? JSON.parse(stored) : {
-            defaultCurrency: 'UGX',
-            monthlyBudget: 0,
-            exchangeRates: {KSH: 0.024, RWF: 0.32}
-        };
+        if(!stored){
+            const defaultSettings = {
+                defaultCurrency: 'UGX',
+                monthlyBudget: 0,
+                exchangeRates: {KSH: 0.024, RWF: 0.32}
+            };
+            saveSettings(defaultSettings)
+
+            return defaultSettings;
+        }
+
+        return JSON.parse(stored);
+
     }catch (error){
-        console.error('Error loading settings:', error)
+        console.error('Error loading settings:', error);
         return getDefaultSettings();
     }
+
 }

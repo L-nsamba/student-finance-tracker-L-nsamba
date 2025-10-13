@@ -83,6 +83,8 @@ function handleTransactionSubmit(event){
 
     };
 
+    addTransaction(transaction);
+
     event.target.reset();
 
 

@@ -1,3 +1,5 @@
+import { loadSettings } from "./storage.js";
+
 //Contains DOM manipulation functions
 export function showSection(sectionId){
     document.querySelectorAll('.page-section').forEach(section => {
@@ -6,6 +8,10 @@ export function showSection(sectionId){
 
     const targetSection = document.getElementById(sectionId);
     targetSection.classList.remove('hidden');
+
+    if (sectionId === 'settings'){
+        populateSettingsForm();
+    }
 
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
@@ -49,8 +55,20 @@ export function closeMobileMenu(){
     navMenu.classList.remove('active');
 }
 
+export function populateSettingsForm(){
+    const settings = loadSettings();
+
+    document.getElementById('currency').value = settings.defaultCurrency;
+    document.getElementById('monthly-budget').value = settings.monthlyBudget;
+    document.getElementById('ksh-rate').value = settings.exchangeRates.KSH;
+    document.getElementById('rwf-rate').value = settings.exchangeRates.RWF;
+}
+
+
 export function renderTable(transactions){
     const tbody = document.querySelector('.transactions-table tbody');
+
+    const settings = loadSettings();
 
     //Returns error message if transaction table is empty
     if (transactions.length === 0){
@@ -62,7 +80,7 @@ export function renderTable(transactions){
     tbody.innerHTML = transactions.map(transaction => `
         <tr>
             <td>${transaction.description}</td>
-            <td>${transaction.amount.toLocaleString()}</td>
+            <td>${settings.defaultCurrency} ${transaction.amount.toLocaleString()}</td>
             <td>${transaction.category}</td>
             <td>${transaction.date}</td>
             <td>
@@ -88,6 +106,6 @@ export function updateDashboard(stats){
     }
 
     if (topCategoryElement){
-        topCategoryElement.textContent = stats.topCategoryElement
+        topCategoryElement.textContent = stats.topCategory;
     }
 }
