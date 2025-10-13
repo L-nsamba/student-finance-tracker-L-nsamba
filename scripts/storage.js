@@ -1,6 +1,7 @@
 //Contains localStorage functions
 
 const STORAGE_KEY = "finance-tracker-data";
+const SETTINGS_KEY = "finance-tracker-settings"
 
 //Function retrieves previously existing/ loaded data when executed
 export function loadTransactions(){
@@ -9,7 +10,7 @@ export function loadTransactions(){
         return stored ? JSON.parse(stored): []
     }catch (error){
         console.error('Error loading transactions:', error);
-        return []
+        return [];
     }
 }
 
@@ -29,7 +30,7 @@ export function exportToJSON(transactions){
     return JSON.stringify(transactions, null, 2);
 }
 
-export function importToJSON(jsonString){
+export function importFromJSON(jsonString){
     try{
         const data = JSON.parse(jsonString);
 
@@ -41,5 +42,41 @@ export function importToJSON(jsonString){
     }catch(error){
         console.error('Error importing JSON:', error);
         return null;
+    }
+}
+
+//Default currency settings
+export function getDefaultSettings(){
+    return{
+        defaultCurrency: 'UGX',
+        monthlyBudget: 0,
+        exchangeRates: {KSH: 0.024, RWF: 0.32}
+    }
+}
+
+
+export function saveSettings(settings){
+    try{
+
+        return true;
+    } catch (error){
+        console.error('Error saving settings', error)
+        return false;
+    }
+}
+
+//Currency settings storage
+export function loadSettings(){
+    try{
+        const stored = localStorage.getItem(SETTINGS_KEY);
+
+        return stored ? JSON.parse(stored) : {
+            defaultCurrency: 'UGX',
+            monthlyBudget: 0,
+            exchangeRates: {KSH: 0.024, RWF: 0.32}
+        };
+    }catch (error){
+        console.error('Error loading settings:', error)
+        return getDefaultSettings();
     }
 }

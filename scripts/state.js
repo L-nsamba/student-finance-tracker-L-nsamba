@@ -1,7 +1,8 @@
 //Contains application state management functions
 
-//Importation of saved transaction history
+//Importation of saved transaction and settings
 import { loadTransactions, saveTransactions } from "./storage.js";
+import { loadSettings } from "./storage.js";
 
 let transactions = loadTransactions();
 
@@ -35,14 +36,35 @@ export function addTransaction(transaction){
     return newTransaction;
 }
 
+//Currency convert logic in settings section
+export function convertCurrency(amount, fromCurrency, toCurrency){
+    const settings = loadSettings();
+
+    if (fromCurrency === toCurrency) return amount;
+
+    //Conversion to UGX first
+    let amountInUGX = amount;
+
+    if (fromCurrency !== 'UGX'){
+        amountInUGX = amount / settings.exchangeRates[fromCurrency];
+    }
+
+    if (toCurrency === 'UGX'){
+        return amountInUGX;
+    }else{
+        return amountInUGX * settings.exchangeRates[toCurrency];
+    }
+}
 
 export function getDashboardStats(){
     //Function responsible for calculating totals, top category
 
+    const settings = loadSettings();
     const totalTransactions = transactions.length;
 
-    //Reduce method ensures each time an item is added its price is added to total spend
-    const totalSpend = transactions.reduce((sum, t) => sum + parseFloat(t.amount), 0);
+    //Conversion of total spend to selected currency
+    const totalSpendUGX = transactions.reduce((sum, t) => sum + parseFloat(t.amount), 0);
+    const totalSpend = convertCurrency(totalSpendUGX, 'UGX', settings.defaultCurrency);
 
     //Finding top category
     const categoryCount = {};
@@ -55,7 +77,8 @@ export function getDashboardStats(){
 
     return {
         totalTransactions,
-        totalSpend,
-        topCategory
+        totalSpend: totalSpend || 0,
+        topCategory,
+        currency: settings.defaultCurrency
     };
 }

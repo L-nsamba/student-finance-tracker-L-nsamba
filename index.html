@@ -43,29 +43,33 @@
 
                 <div id="total_spend" class="stat-card">
                     <h3>Total Spend</h3>
-                    <p class="stat-value"> UGX 200,000 </p>
+                    <p class="stat-value"></p>
                 </div>
 
                 <div id="monthly_budget" class="stat-card">
                     <h3>Monthly budget</h3>
-                    <p class="stat-value">UGX 245,000 </p>
-                    <p class="budget-remaining">UGX 45,000 remaining </p>
+                    <p class="stat-value"></p>
+                    <p class="budget-remaining"></p>
                 </div>
 
                 <div id="total_no_of_transactions" class="stat-card">
                     <h3>Total No of Transaction</h3>
+                    <p class="stat-value"></p>
                 </div>
 
                 <div id="top_category" class="stat-card">
                     <h3>Top Category</h3>
+                    <p class="stat-value"></p>
                 </div>
 
                 <div id="last_seven_days" class="stat-card">
                     <h3>Last 7 days</h3>
+                    <p class="stat-value">Coming soon</p>
                 </div>
 
                 <div id="recent_transactions" class="stat-card">
                     <h3>Recent Transactions</h3>
+                    <p>Coming soon</p>
                 </div>
 
             </div>
@@ -81,7 +85,7 @@
         <section id="table" class="page-section hidden">
             <h2>All Transactions</h2>
 
-                <div class="search-container" id="search-input" placeholder="Search transactions...">
+                <div class="search-container" id="search-input" name="search-input" placeholder="Search transactions...">
                     <input type="text">
                 </div>
 
@@ -122,19 +126,19 @@
                 <!--form will allow user to add new info-->
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" id="description" required>
+                    <input type="text" id="description" name="description" required>
                     <div class="error-message" id="description-error"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="amount">Amount:</label>
-                    <input type="number" id="amount" step="100" required>
+                    <input type="number" id="amount"name="amount" step="100" required>
                     <div class="error-message" id="amount-error"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="category">Category:</label>
-                    <select id="category" required>
+                    <select id="category" name="category" required>
                         <option value="">Select a category</option>
                         <option value="Food">Food</option>
                         <option value="Transport">Transport</option>
@@ -146,7 +150,7 @@
 
                 <div class="form-group">
                     <label for="date">Date:</label>
-                    <input type="date" id="date" required>
+                    <input type="date" id="date" name="date" required>
                 </div>
 
                 <button type="submit" class="submit-btn">Add Transaction</button>
@@ -176,17 +180,34 @@
                 <form id="settings-form">
                     <div class="form-group">
                         <label for="currency">Default Currency:</label>
-                        <select id="currency">
+                        <select id="currency" name="currency">
                             <option value="UGX">UGX</option>
                             <option value="KSH">KSH</option>
                             <option value="RWF">RWF</option>
                         </select>
                     </div>
 
+                    <!--Creation of currency rates-->
+                    <div class="form-group">
+                        <h3>Exchange Rates (PER 1 UGX)</h3>
+                        <label for="ksh-rate">KSH RATE:</label>
+                        <input type="number" id="ksh-rate" name="ksh-rate" step="0.001" value="0.024">
+
+                        <label for="rwf-rate">RWF RATE:</label>
+                        <input type="number" id="rwf-rate" name="rwf-rate" step="0.001" value="0.32">
+                    </div>
+
+                    <!--Addition of save button-->
+
+
+
                     <div class="form-group">
                         <label for="monthly-budget">Monthly Budget:</label>
-                        <input type="number" id="monthly-budget" step="100">
+                        <input type="number" id="monthly-budget" name="monthly-budget" step="100">
                     </div>
+
+                    <button type="submit" class="submit-btn">Save Settings</button>
+
                 </form>
 
         </section>

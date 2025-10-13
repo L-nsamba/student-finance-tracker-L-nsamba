@@ -76,22 +76,18 @@ export function updateDashboard(stats){
     //Updates dashboard elements
 
     const totalSpendElement = document.querySelector('#total_spend .stat-value');
-    const totalTransactionsElement = document.querySelector('#total_no_of_transactions');
-    const topCategoryElement = document.querySelector('#top_category');
+    const totalTransactionsElement = document.querySelector('#total_no_of_transactions .stat-value');
+    const topCategoryElement = document.querySelector('#top_category .stat-value');
 
     if (totalSpendElement){
-        totalSpendElement.textContent = `UGX ${stats.totalSpend.toLocaleString()}`
+        totalSpendElement.textContent = `${stats.currency} ${stats.totalSpend.toLocaleString()}`;
     }
 
     if (totalTransactionsElement){
-        totalTransactionsElement.innerHTML = `
-        <h3>Total Transactions</h3>
-        <p class="stat-value">${stats.totalTransactions}</p>`;
+        totalTransactionsElement.textContent = stats.totalTransactions;
     }
 
     if (topCategoryElement){
-        topCategoryElement.innerHTML = `
-        <h3>Top Category</h3>
-        <p class="stat-value"><${stats.topCategory}</p>`;
+        topCategoryElement.textContent = stats.topCategoryElement
     }
 }
