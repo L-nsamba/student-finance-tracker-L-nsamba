@@ -25,25 +25,12 @@ function updateBudgetDisplay(settings){
 
     if (monthlyBudgetElement && budgetRemainingElement){
 
-        console.log('=== DEBUG updateBudgetDisplay ===');
-        console.log('Settings:', settings);
-
         const stats = getDashboardStats();
 
-        //debug
-
-        console.log('Dashboard Stats:', stats);
 
         const monthlyBudget = settings.monthlyBudget || 0;
         const totalSpend = stats.totalSpend || 0;
         const remaining = monthlyBudget - totalSpend;
-
-         console.log('Monthly Budget:', monthlyBudget);
-         console.log('Total Spend:', totalSpend);
-         console.log('Remaining:', remaining);
-         console.log('============================');
-
-         //debug
 
         monthlyBudgetElement.textContent = `${settings.defaultCurrency} ${monthlyBudget.toLocaleString()}`;
 
