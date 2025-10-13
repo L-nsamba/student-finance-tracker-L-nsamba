@@ -79,11 +79,11 @@ export function renderTable(transactions){
     //Returns the transaction items if has added any yet
     tbody.innerHTML = transactions.map(transaction => `
         <tr>
-            <td>${transaction.description}</td>
-            <td>${settings.defaultCurrency} ${transaction.amount.toLocaleString()}</td>
-            <td>${transaction.category}</td>
-            <td>${transaction.date}</td>
-            <td>
+            <td data-label="Description">${transaction.description}</td>
+            <td data-label="Amount">${settings.defaultCurrency} ${transaction.amount.toLocaleString()}</td>
+            <td data-label="Category">${transaction.category}</td>
+            <td data-label="Date">${transaction.date}</td>
+            <td data-label="Actions">
                 <button class="edit-btn">Edit</button>
                 <button class="delete-btn">Delete</button>
             </td>

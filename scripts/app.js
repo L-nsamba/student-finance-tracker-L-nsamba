@@ -105,7 +105,7 @@ function handleTransactionSubmit(event){
 }
 
 function clearErrorMessages(){
-    document.querySelectorAll('error-message').forEach(error => {
+    document.querySelectorAll('.error-message').forEach(error => {
         error.textContent = '';
         error.style.display = 'none';
     });
