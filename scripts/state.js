@@ -7,10 +7,12 @@ import { loadSettings } from "./storage.js";
 let transactions = loadTransactions();
 
 export function getTransactions(){
+    //Function retrieves saved transactions
     return transactions;
 }
 
 export function setTransactions(newTransactions){
+    //Function allows the addition of new transactions
     transactions = newTransactions;
     saveTransactions(transactions);
     return transactions;
@@ -40,6 +42,7 @@ export function addTransaction(transaction){
 export function convertCurrency(amount, fromCurrency, toCurrency){
     const settings = loadSettings();
 
+    //Ensures the from and to currency are strictly equal
     if (fromCurrency === toCurrency) return amount;
 
     //Conversion to UGX first

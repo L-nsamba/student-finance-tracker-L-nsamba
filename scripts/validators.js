@@ -120,8 +120,13 @@ export function validateDescriptionStrength(text){
 }
 
 export function validateTransaction(transaction){
+    //Array list to store the errors
     const errors = [];
 
+    /*The if conditions below determine whether the content within
+    the form is valid ie true or false to either reject it from
+    entering the system or successfully accept the info entered*/
+    
     const descValidation = validateDescription(transaction.description);
 
     if (!descValidation.isValid){

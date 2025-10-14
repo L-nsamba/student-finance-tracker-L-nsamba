@@ -20,8 +20,10 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function updateBudgetDisplay(settings){
-    //Function contains the logic to adjust the monthly budget and total spend
-    //It also carries out the  calculations for amount remaining
+
+    /*Function contains the logic to adjust the monthly budget and total spend
+    on the dashboard overview. It also carries out the  calculations for amount remaining*/
+
     const monthlyBudgetElement = document.querySelector('#monthly_budget .stat-value');
 
     const budgetRemainingElement = document.querySelector('#monthly_budget .budget-remaining');
@@ -125,13 +127,6 @@ function handleSettingsSubmit(event){
 
     const formData = new FormData(event.target);
 
-    //debug
-    const monthlyBudgetInput = formData.get('monthly-budget');
-    console.log('Form monthly-budget value:', monthlyBudgetInput, 'Type:', typeof monthlyBudgetInput);
-
-    //debug
-
-
     const settings = {
         defaultCurrency: formData.get('currency'),
         monthlyBudget: parseFloat(formData.get('monthly-budget')) || 0,
@@ -142,10 +137,6 @@ function handleSettingsSubmit(event){
     };
 
     saveSettings(settings)
-
-    //debug
-    const savedSettings = loadSettings();
-    console.log('Settings after save:', savedSettings);
 
 
 

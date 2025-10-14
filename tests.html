@@ -33,7 +33,9 @@
         } from './scripts/validators.js'
 
         function runTest(validator, input, expected, testName){
-            //Function will add the html content defined below to the web page
+            /*Function defines the html to appear on the web page for different
+            validation tests*/
+
             const result = validator(input);
             const passed = result.isValid === expected;
 
