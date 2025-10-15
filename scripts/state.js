@@ -1,18 +1,15 @@
-//Contains application state management functions
 
-//Importation of saved transaction and settings
 import { loadTransactions, saveTransactions } from "./storage.js";
 import { loadSettings } from "./storage.js";
 
 let transactions = loadTransactions();
 
 export function getTransactions(){
-    //Function retrieves saved transactions
+    //Retrival of saved transactions if any
     return transactions;
 }
 
 export function setTransactions(newTransactions){
-    //Function allows the addition of new transactions
     transactions = newTransactions;
     saveTransactions(transactions);
     return transactions;
@@ -24,6 +21,7 @@ export function addTransaction(transaction){
     const newTransaction = {
         id: 'txn_' + Date.now(),
         ...transaction,
+        //toISOString() method converts date into standard string format
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
     };
@@ -42,10 +40,8 @@ export function addTransaction(transaction){
 export function convertCurrency(amount, fromCurrency, toCurrency){
     const settings = loadSettings();
 
-    //Ensures the from and to currency are strictly equal
     if (fromCurrency === toCurrency) return amount;
 
-    //Conversion to UGX first
     let amountInUGX = amount;
 
     if (fromCurrency !== 'UGX'){
@@ -60,8 +56,9 @@ export function convertCurrency(amount, fromCurrency, toCurrency){
 }
 
 export function getDashboardStats(){
-    //Function responsible for calculating totals, top category
+    //Computes dashboard summary statistics
 
+    //Constants defined to access saved settings and transactions
     const settings = loadSettings();
     const totalTransactions = transactions.length;
 
@@ -69,13 +66,14 @@ export function getDashboardStats(){
     const totalSpendUGX = transactions.reduce((sum, t) => sum + parseFloat(t.amount), 0);
     const totalSpend = convertCurrency(totalSpendUGX, 'UGX', settings.defaultCurrency);
 
-    //Finding top category
+    //Determines how many times each category appears and stores in an object
     const categoryCount = {};
     transactions.forEach(t => {
         categoryCount[t.category] = (categoryCount[t.category] || 0) + 1;
     });
 
     const topCategory = Object.keys(categoryCount).reduce((a,b) =>
+        //Identifys the key,value pair which has most appearances in the object
         categoryCount[a] > categoryCount[b] ? a : b, 'None');
 
     return {

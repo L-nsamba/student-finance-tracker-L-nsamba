@@ -1,4 +1,3 @@
-//Contains regex validaton
 
 export function validateDescription(description){
 
@@ -126,7 +125,7 @@ export function validateTransaction(transaction){
     /*The if conditions below determine whether the content within
     the form is valid ie true or false to either reject it from
     entering the system or successfully accept the info entered*/
-    
+
     const descValidation = validateDescription(transaction.description);
 
     if (!descValidation.isValid){
@@ -160,6 +159,7 @@ export function validateTransaction(transaction){
         errors.push({field: 'category', message: categoryValidation.message})
     };
 
+    //Only displays output if there are 0 errors
     return{
         isValid: errors.length === 0,
         errors: errors
@@ -167,6 +167,7 @@ export function validateTransaction(transaction){
 }
 
 export function compileRegex(pattern, flags = 'i'){
+    //Function prevents crashing of program incase of invalid regex
     try{
         return pattern ? new RegExp(pattern, flags) : null;
     }catch(error){

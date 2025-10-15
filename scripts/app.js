@@ -1,7 +1,6 @@
-//Runs all the js
 
 import { addTransaction, getDashboardStats, getTransactions } from "./state.js";
-import { showSection, setupNavigation, renderTable, updateDashboard } from "./ui.js";
+import { showSection, setupNavigation, displayTable, updateDashboard } from "./ui.js";
 import { saveSettings, loadSettings } from "./storage.js";
 import { validateTransaction } from "./validators.js";
 
@@ -9,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function(){
     setupNavigation();
     setupFormHandling();
 
-    //Load initial data
+    //Loads initial data on the dashboard overview
     const transactions = getTransactions();
     const settings = loadSettings();
 
     showSection('dashboard');
-    renderTable(transactions);
+    displayTable(transactions);
     updateDashboard(getDashboardStats());
     updateBudgetDisplay(settings);
 });
@@ -24,21 +23,25 @@ function updateBudgetDisplay(settings){
     /*Function contains the logic to adjust the monthly budget and total spend
     on the dashboard overview. It also carries out the  calculations for amount remaining*/
 
+
+   //These constants defined are used to access the corresponding ids and classes in the html
     const monthlyBudgetElement = document.querySelector('#monthly_budget .stat-value');
 
     const budgetRemainingElement = document.querySelector('#monthly_budget .budget-remaining');
 
+    /*This if condition only returns if both elements are
+    present and accessible within the html */
     if (monthlyBudgetElement && budgetRemainingElement){
 
         const stats = getDashboardStats();
 
 
-
+        //Constant defined will either display the new updated amount or a default (0)
         const monthlyBudget = settings.monthlyBudget || 0;
         const totalSpend = stats.totalSpend || 0;
         const remaining = monthlyBudget - totalSpend;
 
-        //Displays monthly budget numeric value
+        //Displays monthly budget numeric value on html dashboard overview
         monthlyBudgetElement.textContent = `${settings.defaultCurrency} ${monthlyBudget.toLocaleString()}`;
 
         if (remaining >= 0){
@@ -53,13 +56,12 @@ function updateBudgetDisplay(settings){
 }
 
 function setupFormHandling(){
-    //Function controls the forms initial setup
 
-    //Transaction form
+    /*The constants defined below access the transactions-form and
+    settings-form within html and give them functionality (submit) */
     const transactionForm = document.getElementById('transactions-form');
-   transactionForm.addEventListener('submit', handleTransactionSubmit);
+    transactionForm.addEventListener('submit', handleTransactionSubmit);
 
-    //Settings form
     const settingsForm = document.getElementById('settings-form');
     settingsForm.addEventListener('submit', handleSettingsSubmit);
 }
@@ -69,6 +71,7 @@ function handleTransactionSubmit(event){
 
     const formData = new FormData(event.target);
 
+    //Accessing the desired filled in fields from the form
     const transaction = {
         description: formData.get('description'),
         amount: parseFloat(formData.get('amount')),
@@ -77,8 +80,10 @@ function handleTransactionSubmit(event){
 
     };
 
+    //Constant defined to call the function that has form regex validation
     const validationResult = validateTransaction(transaction)
 
+    //This if condition will return the error if a field doesnt meet regex criteria
     if(!validationResult.isValid){
         clearErrorMessages();
         validationResult.errors.forEach(error => {
@@ -94,19 +99,21 @@ function handleTransactionSubmit(event){
     event.target.reset();
 
 
-
+    //Constants defined to display the saved transactions and settings
     const transactions = getTransactions();
     const settings = loadSettings();
 
-    renderTable(transactions);
+    //Updates tables, dashboard overview, budget
+    displayTable(transactions);
     updateDashboard(getDashboardStats());
     updateBudgetDisplay(settings);
 
-    //Updates the dashboard overview
     showSection('dashboard');
 }
 
 function clearErrorMessages(){
+
+    //Will display an empty string and no output
     document.querySelectorAll('.error-message').forEach(error => {
         error.textContent = '';
         error.style.display = 'none';
@@ -116,6 +123,7 @@ function clearErrorMessages(){
 function showError(field, message){
     const errorElement = document.getElementById(`${field}-error`);
 
+    //Describes the nature of the error
     if (errorElement){
         errorElement.textContent = message;
         errorElement.style.display = 'block'

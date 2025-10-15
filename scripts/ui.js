@@ -65,7 +65,7 @@ export function populateSettingsForm(){
 }
 
 
-export function renderTable(transactions){
+export function displayTable(transactions){
     const tbody = document.querySelector('.transactions-table tbody');
 
     const settings = loadSettings();

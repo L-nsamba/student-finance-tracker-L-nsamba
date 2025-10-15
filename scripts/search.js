@@ -31,8 +31,10 @@ export function searchTransactions(transactions, searchPattern){
         }));
     }
 
-    /*gi represents the regex case sensitivity flags
-     ie it allows users to enter different cases without penalizing them*/
+    /*
+    gi represents the regex case sensitivity flags
+    ie it allows users to enter different cases without penalizing them
+     */
     const regex = compileRegex(searchPattern, 'gi');
     if(!regex){
         return transactions.map(transaction => ({
@@ -62,9 +64,11 @@ export function setupSearch(transactions, renderFunction){
 
     if(!searchInput) return;
 
-    /*Timeout is necessary to allow computer to only search
-    after exactly 300ms have passed from user stopping typing
-    so as to prevent searching each character user types*/
+    /*
+    Timeout is necessary to allow computer to only search
+    after a specified time has passed from user stopping typing
+    so as to prevent immediately searching each character user types
+    */
     let searchTimeout;
 
     searchInput.addEventListener('input', (event) => {
