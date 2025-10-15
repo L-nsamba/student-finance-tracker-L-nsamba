@@ -85,9 +85,20 @@
         <section id="table" class="page-section hidden">
             <h2>All Transactions</h2>
 
+            <div class="table-controls">
                 <div class="search-container" id="search-input" name="search-input" placeholder="Search transactions...">
                     <input type="text" placeholder="Search transactions">
                 </div>
+
+                <div class="import-export-controls">
+                    <button id="export-btn" class="secondary-btn">Export JSON</button>
+                    <label for="import-file" class="secondary-btn">
+                        Import JSON
+                        <input type="file" id="import-file" accept=".json" style="display: none;">
+                    </label>
+                </div>
+            </div>
+
 
                 <table class="transactions-table">
                     <thead>

@@ -1,5 +1,4 @@
 
-
 //Definition of keys to identify what's in localStorage
 const STORAGE_KEY = "finance-tracker-data";
 const SETTINGS_KEY = "finance-tracker-settings"
@@ -29,25 +28,29 @@ export function saveTransactions(transactions){
 }
 
 export function exportToJSON(transactions){
-    /*Function takes an array list of transactions and
-    converts them to JSON string*/
-    return JSON.stringify(transactions, null, 2);
+    /*
+    Function takes an array list of transactions and
+    converts them to JSON string
+    */
+
+    const data = {
+        version: "1.0",
+        exportedAt: new Date().toISOString(),
+        transactions: transactions
+    };
+    return JSON.stringify(data, null, 2);
 }
 
 export function importFromJSON(jsonString){
-    //Converts JSON strings to usable JS
     try{
-        //Tranformation of string into a real array
-        const data = JSON.parse(jsonString);
+        const transactions = JSON.parse(jsonString);
 
-        //Checking if it's an array
-        if(Array.isArray(data)){
-            return data;
+        if(!Array.isArray(transactions)){
+            throw new Error('File must contain an array of transactions');
         }
-        throw new Error('Invalid data format')
-    }catch(error){
-        console.error('Error importing JSON:', error);
-        return null;
+        return transactions;
+    }catch (error){
+        throw new Error('Invalid JSON file')
     }
 }
 
