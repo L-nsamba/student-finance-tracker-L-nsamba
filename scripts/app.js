@@ -1,12 +1,13 @@
 
-import { addTransaction, editTransaction, getDashboardStats, getTransactions } from "./state.js";
+import { addTransaction, editTransaction, getDashboardStats, getTransactions, setTransactions } from "./state.js";
 import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting, setupEditAndDelete } from "./ui.js";
-import { saveSettings, loadSettings } from "./storage.js";
+import { saveSettings, loadSettings, exportToJSON, importFromJSON } from "./storage.js";
 import { validateTransaction } from "./validators.js";
 
 document.addEventListener('DOMContentLoaded', function(){
     setupNavigation();
     setupFormHandling();
+    setupImportExport();
 
     //Loads initial data on the dashboard overview
     const transactions = getTransactions();
@@ -166,4 +167,65 @@ function handleSettingsSubmit(event){
     updateDashboard(getDashboardStats());
 
     alert('Settings saved successfully')
+}
+
+function setupImportExport(){
+    const exportBtn = document.getElementById('export-btn');
+    const importFile = document.getElementById('import-file');
+
+    if (exportBtn){
+        exportBtn.addEventListener('click', handleExport);
+    }
+
+    if (importFile){
+        importFile.addEventListener('change', handleImport);
+    }
+}
+
+function handleExport(){
+
+    const transactions = getTransactions();
+    if (transactions.length === 0){
+        alert('No transactions to export!')
+        return;
+    }
+
+
+    const jsonData = JSON.stringify(transactions, null, 2);
+
+    //Blob in js means binary large object
+    const blob = new Blob([jsonData], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+
+    //Creation of an anchor tag to link the url to and download the json file on click
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'transactions.json'
+    a.click();
+
+    //Cleaning up url object
+    URL.revokeObjectURL(url);
+
+    alert('Exported successfully!')
+}
+
+function handleImport(event){
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e){
+        try{
+            const importedTransactions = importFromJSON(e.target.result);
+            setTransactions(importedTransactions);
+            displayTable(importedTransactions);
+            updateDashboard(getDashboardStats());
+            alert(`Imported ${importedTransactions.length} transactions!`)
+
+        } catch(error){
+            alert('Import failed: ' + error.message)
+        }
+
+    };
+    reader.readAsText(file);
 }
