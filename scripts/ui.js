@@ -124,3 +124,7 @@ export function updateDashboard(stats){
         topCategoryElement.textContent = stats.topCategory;
     }
 }
+
+export function setupSorting(transactions){
+    
+}

@@ -54,6 +54,7 @@
             return testDiv;
         }
 
+        //Description tests
         const testsContainer = document.getElementById('tests');
 
         const descSection = document.createElement('div');
@@ -61,7 +62,6 @@
         descSection.innerHTML = '<h2>Description Validation Tests</h2>';
 
 
-        //Description tests
         const descTests = [
             ['Breakfast at mall', true, 'Normal description'],
             [' Supper', false, 'Leading spaces'],
@@ -74,13 +74,15 @@
         descTests.forEach(([input, expected, name]) => {
             descSection.appendChild(runTest(validateDescription, input, expected, name));
         });
+
+        //Amount tests
         testsContainer.appendChild(descSection);
 
         const amountSection = document.createElement('div');
         amountSection.className = 'test-section';
         amountSection.innerHTML = '<h2>Amount Validation Tests</h2>'
 
-        //Amount tests
+
         const amountTests = [
             ['4060', true, 'Whole number'],
             ['24.90', true, 'With decimal'],
@@ -95,6 +97,67 @@
 
         });
         testsContainer.appendChild(amountSection);
+
+        //Date Test
+        const dateSection = document.createElement('div');
+        dateSection.className = 'test-section';
+        dateSection.innerHTML = '<h2>Date Validation Tests</h2>';
+
+        const dateTests = [
+            ['2025-10-15', true, 'Valid date'],
+            ['2025-04-01', true, 'Valid date with leading zeros'],
+            ['2025-1-2', false, 'Invalid date & month, missing leading zero'],
+            ['2025-14-01', false, 'Invalid month'],
+            ['2025.01.01', false, 'Invalid date, wrong separator'],
+        ];
+
+        dateTests.forEach(([input, expected, name]) => {
+            dateSection.appendChild(runTest(validateDate, input, expected, name));
+
+        });
+        testsContainer.appendChild(dateSection);
+
+        //Category Tests
+        const categorySection = document.createElement('div');
+        categorySection.className = 'test-section';
+        categorySection.innerHTML = '<h2>Category Validation Tests</h2>'
+
+        const categoryTests = [
+            ['Food', true, 'Valid'],
+            ['Transport', true, 'Valid'],
+            ['Entertainment', true, 'Valid'],
+            ['Books', true, 'Valid'],
+            ['Other', true, 'Valid'],
+            ['', false, 'Invalid']
+        ];
+
+        categoryTests.forEach(([input, expected, name]) => {
+            categorySection.appendChild(runTest(validateCategory, input, expected, name));
+        });
+        testsContainer.appendChild(categorySection);
+
+        //Duplicate words tests
+        const duplicateSection = document.createElement('div');
+        duplicateSection.className = 'test-section';
+        duplicateSection.innerHTML = '<h2>Duplicate Words Validation</h2>'
+
+        const duplicateTests = [
+            ['supper supper with friends', false, 'Duplicate words'],
+            ['Dinner with siblings', true, 'No duplicates'],
+            ['Swimming on sunday', true, 'Normal description']
+
+        ];
+
+        duplicateTests.forEach(([input, expected, name]) => {
+            duplicateSection.appendChild(runTest(validateNoDuplicateWords, input, expected, name));
+
+        });
+
+        testsContainer.appendChild(duplicateSection);
+
+
+
+
     </script>
 
 </body>
