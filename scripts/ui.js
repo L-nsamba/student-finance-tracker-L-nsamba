@@ -1,4 +1,5 @@
 import { loadSettings } from "./storage.js";
+import { setupSearch } from "./search.js";
 
 //Contains DOM manipulation functions
 export function showSection(sectionId){
@@ -65,9 +66,10 @@ export function populateSettingsForm(){
 }
 
 
-export function displayTable(transactions){
-    const tbody = document.querySelector('.transactions-table tbody');
+export function displayTable(transactions, isSearchResult = false){
+    //isSearchResult parameter displays highlighted text if true and normal transactions if false
 
+    const tbody = document.querySelector('.transactions-table tbody');
     const settings = loadSettings();
 
     //Returns error message if transaction table is empty
@@ -76,10 +78,16 @@ export function displayTable(transactions){
         return;
     }
 
-    //Returns the transaction items if has added any yet
+    /*
+    Adjusting the html to change output on transaction screen when
+    user searches for specific element
+     */
     tbody.innerHTML = transactions.map(transaction => `
         <tr>
-            <td data-label="Description">${transaction.description}</td>
+            <td data-label="Description">
+            ${isSearchResult ? transaction.description: transaction.originalDescription || transaction.description}
+            </td>
+
             <td data-label="Amount">${settings.defaultCurrency} ${transaction.amount.toLocaleString()}</td>
             <td data-label="Category">${transaction.category}</td>
             <td data-label="Date">${transaction.date}</td>
@@ -90,8 +98,15 @@ export function displayTable(transactions){
         </tr>`).join('');
 }
 
+export function initializeSearch(transactions){
+    //Takes transactions, calls the search function & displays highlighted matches
+    setupSearch(transactions, (filteredTransactions => {
+        displayTable(filteredTransactions, true);
+    }))
+}
+
 export function updateDashboard(stats){
-    //Updates dashboard elements
+    //Updates dashboard overview elements
 
     const totalSpendElement = document.querySelector('#total_spend .stat-value');
     const totalTransactionsElement = document.querySelector('#total_no_of_transactions .stat-value');
