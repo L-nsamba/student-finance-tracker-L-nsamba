@@ -1,6 +1,6 @@
 
-import { addTransaction, getDashboardStats, getTransactions } from "./state.js";
-import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting } from "./ui.js";
+import { addTransaction, editTransaction, getDashboardStats, getTransactions } from "./state.js";
+import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting, setupEditAndDelete } from "./ui.js";
 import { saveSettings, loadSettings } from "./storage.js";
 import { validateTransaction } from "./validators.js";
 
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function(){
     displayTable(transactions);
     updateDashboard(getDashboardStats());
     updateBudgetDisplay(settings);
+    setupEditAndDelete();
 
 });
 
@@ -71,6 +72,10 @@ function handleTransactionSubmit(event){
     event.preventDefault();
 
     const formData = new FormData(event.target);
+    const form = event.target;
+
+    //This constant will be called upon when user is editing a saved transaction
+    const isEditing = form.dataset.editingId;
 
     //Accessing the desired filled in fields from the form
     const transaction = {
@@ -95,10 +100,18 @@ function handleTransactionSubmit(event){
 
     clearErrorMessages();
 
-    addTransaction(transaction);
+    if (isEditing){
+        editTransaction(isEditing, transaction);
+    }else{
+        addTransaction(transaction);
+    }
 
-    event.target.reset();
+    //Clearing the old saved transaction from system memory
+    form.reset();
+    delete form.dataset.editingId;
 
+    const submitBtn = form.querySelector('.submit-btn');
+    submitBtn.textContent = 'Add Transaction';
 
     //Constants defined to display the saved transactions and settings
     const transactions = getTransactions();

@@ -109,3 +109,25 @@ export function sortTransactions(transactions, sortBy){
 
     return sorted
 }
+
+export function editTransaction(id, updatedData){
+    const transaction = transactions.find(t => t.id === id);
+    if (transaction) {
+        //The if condition allows user to edit a saved record and assigns it a new timestamp
+        Object.assign(transaction, updatedData, {
+            updatedAt: new Date().toISOString()
+        });
+        saveTransactions(transactions);
+        return transaction
+    }
+    return null;
+}
+
+export function deleteTransaction(id){
+    if(confirm('Are you sure you want to delete this transaction?')){
+        transactions = transactions.filter(t => t.id !== id);
+        saveTransactions(transactions);
+        return true;
+    }
+    return false;
+}

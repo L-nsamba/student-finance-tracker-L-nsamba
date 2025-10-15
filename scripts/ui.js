@@ -1,6 +1,6 @@
 import { loadSettings } from "./storage.js";
 import { setupSearch } from "./search.js";
-import { getTransactions, sortTransactions } from "./state.js";
+import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats } from "./state.js";
 
 //Contains DOM manipulation functions
 export function showSection(sectionId){
@@ -90,7 +90,7 @@ export function displayTable(transactions, isSearchResult = false){
     user searches for specific element
      */
     tbody.innerHTML = transactions.map(transaction => `
-        <tr>
+        <tr data-id="${transaction.id}">
             <td data-label="Description">
             ${isSearchResult ? transaction.description: transaction.originalDescription || transaction.description}
             </td>
@@ -144,5 +144,49 @@ export function setupSorting(){
             const sorted = sortTransactions(transactions, sortBy);
             displayTable(sorted)
         });
+    });
+}
+
+export function setupEditAndDelete(){
+    const table = document.querySelector('.transactions-table');
+
+    table.addEventListener('click', (event) => {
+
+        const button = event.target;
+        const row = button.closest('tr');
+
+        if (!row) return;
+
+        if (button.classList.contains('edit-btn')){
+            const transactionId = row.dataset.id;
+            const transactions = getTransactions();
+            const transaction = transactions.find(t => t.id === transactionId);
+
+            if (transaction){
+                document.getElementById('description').value = transaction.description;
+                document.getElementById('amount').value = transaction.amount;
+                document.getElementById('category').value = transaction.category;
+                document.getElementById('date').value = transaction.date;
+
+                //Accessing the transaction form from html to reflect the edit
+                const form = document.getElementById('transactions-form')
+                form.dataset.editingId = transactionId;
+
+                //Changing the display content on button from edit to update after first edit
+                const submitBtn = form.querySelector('.submit-btn');
+                submitBtn.textContent = 'Update Transaction';
+
+                showSection('add-form');
+            }
+        }
+
+        if (button.classList.contains('delete-btn')){
+            const transactionId = row.dataset.id;
+            if (deleteTransaction(transactionId)){
+                const transactions = getTransactions();
+                displayTable(transactions);
+                updateDashboard(getDashboardStats());
+            }
+        }
     });
 }
