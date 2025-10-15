@@ -188,21 +188,36 @@ header {
 }
 
 .transactions-table th{
-    background-color:  #f8f9fa;
+    background-color: white;
     font-weight: 600;
 }
 
+.search-highlight{
+    background-color: lightgreen;
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
 .search-container{
+    position: relative;
     margin: 1rem 0;
 }
 
 .search-container input{
     width: 100%;
-    padding: 10px;
+    padding:10px 40px 10px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 1rem;
 }
 
+.search-container::after{
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    color: gray;
+}
 /*FORM STYLING*/
 .form-group{
     margin-bottom: 1.5rem ;

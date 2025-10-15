@@ -14,7 +14,6 @@ export function highlightMatches(text, regex){
 
     //text.replace finds all matches while mark element highlights the matches
     return text.replace(regex, match => `<mark class="search-highlight">${match}</mark>`);
-
 }
 
 export function searchTransactions(transactions, searchPattern){
