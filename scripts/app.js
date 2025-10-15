@@ -1,6 +1,6 @@
 
 import { addTransaction, getDashboardStats, getTransactions } from "./state.js";
-import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch } from "./ui.js";
+import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting } from "./ui.js";
 import { saveSettings, loadSettings } from "./storage.js";
 import { validateTransaction } from "./validators.js";
 
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function(){
     updateDashboard(getDashboardStats());
     updateBudgetDisplay(settings);
 
-    initializeSearch(transactions);
 });
 
 function updateBudgetDisplay(settings){

@@ -62,7 +62,7 @@ export function setupSearch(transactions, renderFunction){
             //Calling function to display filtered results that meet condition
             renderFunction(filteredTransactions);
 
-        }, 2000)
+        }, 500)
     });
 
     /*When the user hovers over the search box it will give them these hints

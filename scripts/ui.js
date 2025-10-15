@@ -1,5 +1,6 @@
 import { loadSettings } from "./storage.js";
 import { setupSearch } from "./search.js";
+import { getTransactions, sortTransactions } from "./state.js";
 
 //Contains DOM manipulation functions
 export function showSection(sectionId){
@@ -9,6 +10,12 @@ export function showSection(sectionId){
 
     const targetSection = document.getElementById(sectionId);
     targetSection.classList.remove('hidden');
+
+    if (sectionId === 'table'){
+        const transactions = getTransactions();
+        setupSorting();
+        initializeSearch(transactions)
+    }
 
     if (sectionId === 'settings'){
         populateSettingsForm();
@@ -125,6 +132,17 @@ export function updateDashboard(stats){
     }
 }
 
-export function setupSorting(transactions){
-    
+
+export function setupSorting(){
+    const headers = document.querySelectorAll('.transactions-table th');
+
+    headers.forEach(header => {
+        header.style.cursor = 'pointer';
+        header.addEventListener('click', () => {
+            const sortBy = header.textContent.toLowerCase();
+            const transactions = getTransactions();
+            const sorted = sortTransactions(transactions, sortBy);
+            displayTable(sorted)
+        });
+    });
 }

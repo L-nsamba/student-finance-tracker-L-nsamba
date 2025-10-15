@@ -83,3 +83,29 @@ export function getDashboardStats(){
         currency: settings.defaultCurrency
     };
 }
+
+export function sortTransactions(transactions, sortBy){
+    const sorted = [...transactions];
+
+    sorted.sort((a,b) => {
+        // a & b represent transactions being compared
+        switch(sortBy){
+            case 'description':
+                return a.description.localeCompare(b.description);
+
+            case 'amount':
+                return a.amount - b.amount;
+
+            case 'date':
+                return new Date(a.date) - new Date(b.date);
+
+            case 'category':
+                return a.category.localeCompare(b.category);
+
+            default:
+                return 0;
+        }
+    });
+
+    return sorted
+}

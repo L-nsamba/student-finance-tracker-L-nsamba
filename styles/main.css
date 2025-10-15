@@ -218,8 +218,13 @@ header {
 }
 
 .transactions-table th{
-    background-color: white;
-    font-weight: 600;
+    position: relative;
+    padding-right: 25px !important;
+    transition: background-color 0.3s ease;
+}
+
+.transactions-table th:hover{
+    background-color: #e9ecef !important;
 }
 
 .search-highlight{
@@ -423,7 +428,7 @@ header {
     }
 
     .transactions-table thead{
-        display: none;
+        display: table-header-group;
     }
 
     .transactions-table tr{
@@ -434,6 +439,19 @@ header {
         padding: 1rem;
         background: white;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .transactions-table th{
+        padding: 14px 6px;
+        font-size: 0.85rem;
+        min-height: 44px;
+        background: #f8f9fa;
+        border-bottom: 3px solid #dee2e6;
+    }
+
+    .transactions-table th::after{
+        font-size: 0.9em;
+        right: 4px;
     }
 
     .transactions-table td{
@@ -467,7 +485,6 @@ header {
     .transactions-table td:last-child::before{
         content: "";
         width: 0;
-        /* color: red !important; */
         margin-right: 0;
     }
 
