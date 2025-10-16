@@ -172,9 +172,9 @@ export function updateDashboard(stats){
 
 
 export function setupSorting(){
-    //Function controls the sorting according to category on the table view page
     const headers = document.querySelectorAll('.transactions-table th');
 
+    //Sorts items in ascending order
     headers.forEach(header => {
         header.style.cursor = 'pointer';
         header.addEventListener('click', () => {
@@ -189,16 +189,28 @@ export function setupSorting(){
 export function setupEditAndDelete(){
     //Function gives the edit and delete buttons functionality
     const table = document.querySelector('.transactions-table');
+    const cardsContainer = document.querySelector('.cards-container')
 
     table.addEventListener('click', (event) => {
-
+        //Enables the actual editing on button of choice
         const button = event.target;
         const row = button.closest('tr');
-
         if (!row) return;
+        handleEditDelete(button, row.dataset.id);
+    });
 
+    if(cardsContainer){
+        cardsContainer.addEventListener('click', (event) => {
+            const button = event.target;
+            const card = button.closest('.transaction-card');
+            if(!card) return;
+            handleEditDelete(button, card.dataset.id);
+        });
+    }
+
+    function handleEditDelete(button, transactionId){
+        //Introducing of functionality to buttons on card view and table view
         if (button.classList.contains('edit-btn')){
-            const transactionId = row.dataset.id;
             const transactions = getTransactions();
             const transaction = transactions.find(t => t.id === transactionId);
 
@@ -220,7 +232,6 @@ export function setupEditAndDelete(){
         }
 
         if (button.classList.contains('delete-btn')){
-            const transactionId = row.dataset.id;
             //Removal of deleted item history from dashboard overview
             if (deleteTransaction(transactionId)){
                 const transactions = getTransactions();
@@ -228,5 +239,5 @@ export function setupEditAndDelete(){
                 updateDashboard(getDashboardStats());
             }
         }
-    });
+    }
 }
