@@ -8,7 +8,6 @@ export function compileRegex(input, flags = 'i'){
 }
 
 export function highlightMatches(text, regex){
-    //Highlighting of text that matches users search criteria
     if(!regex || !text) return text;
 
     return text.replace(regex, match => `<mark class="search-highlight">${match}</mark>`);

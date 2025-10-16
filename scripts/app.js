@@ -5,7 +5,7 @@ import { saveSettings, loadSettings, exportToJSON, importFromJSON } from "./stor
 import { validateTransaction } from "./validators.js";
 
 document.addEventListener('DOMContentLoaded', function(){
-    //Calling functions to execute tasks defined within them
+    //Calling functions to execute the app logic
     setupNavigation();
     setupFormHandling();
     setupImportExport();
@@ -21,8 +21,16 @@ document.addEventListener('DOMContentLoaded', function(){
 
 });
 
+function showLoading(){
+    document.body.style.cursor = 'wait';
+}
+
+function hideLoading(){
+    document.body.style.cursor = 'default';
+}
+
 function updateBudgetDisplay(settings){
-    //Function contains the logic that adjusts content in features on dashboard overview
+    //Function contains the logic that adjusts the dashboard overview content
 
     const monthlyBudgetElement = document.querySelector('#monthly_budget .stat-value');
     const budgetRemainingElement = document.querySelector('#monthly_budget .budget-remaining');
@@ -31,7 +39,6 @@ function updateBudgetDisplay(settings){
 
         const stats = getDashboardStats();
 
-        //These constants defined will ensure accurate currency conversion, with default being UGX
         const monthlyBudgetInUGX = settings.monthlyBudget || 0;
         const monthlyBudgetInSelectedCurrency = settings.defaultCurrency === 'UGX'
         ? monthlyBudgetInUGX
@@ -96,10 +103,8 @@ function handleTransactionSubmit(event){
 
     };
 
-    //Constant defined to call the function that has form regex validation
     const validationResult = validateTransaction(transaction)
 
-    //This if condition will return the error if a field doesnt meet regex criteria
     if(!validationResult.isValid){
         clearErrorMessages();
         validationResult.errors.forEach(error => {
@@ -138,7 +143,6 @@ function handleTransactionSubmit(event){
 
 function clearErrorMessages(){
 
-    //Will display an empty string and no output
     document.querySelectorAll('.error-message').forEach(error => {
         error.textContent = '';
         error.style.display = 'none';
@@ -233,8 +237,10 @@ function handleExport(){
 
 function handleImport(event){
     //Function allows user to use their own JSON file
+    showLoading();
     const file = event.target.files[0];
     if (!file) return;
+    hideLoading();
 
     const reader = new FileReader();
     reader.onload = function(e){
@@ -245,6 +251,7 @@ function handleImport(event){
             updateDashboard(getDashboardStats());
             alert(`Imported ${importedTransactions.length} transactions!`)
             announceStatus(`Successfully imported ${importedTransactions.length} transactions`);
+            document.getElementById('import-file').value = '';
 
         } catch(error){
             alert('Import failed: ' + error.message)
