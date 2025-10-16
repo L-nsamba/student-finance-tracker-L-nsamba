@@ -92,10 +92,8 @@ export function displayTable(transactions, isSearchResult = false){
 
             <td data-label="Amount">
             ${settings.defaultCurrency}
-            ${convertCurrency(transaction.amount, 'UGX', settings.defaultCurrency.toLocaleString())}
+            ${convertCurrency(transaction.amount, 'UGX', settings.defaultCurrency).toLocaleString()}
             </td>
-
-            <td data-label="Amount">${settings.defaultCurrency} ${transaction.amount.toLocaleString()}</td>
             <td data-label="Category">${transaction.category}</td>
             <td data-label="Date">${transaction.date}</td>
             <td data-label="Actions">
