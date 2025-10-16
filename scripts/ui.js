@@ -1,6 +1,8 @@
 import { loadSettings } from "./storage.js";
-import { setupSearch } from "./search.js";
-import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats, getLastSevenDaysTransactions, getLastSevenDaysDailyTotals, convertCurrency } from "./state.js";
+import { setupSearch, searchTransactions, compileRegex, highlightMatches } from "./search.js";
+import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats,
+getLastSevenDaysTransactions, getLastSevenDaysDailyTotals, convertCurrency,
+} from "./state.js";
 
 export function showSection(sectionId){
     //Function gives nav-toggle & nav-links functionality
@@ -138,7 +140,7 @@ export function initializeSearch(transactions){
     //Takes transactions, calls the search function & displays highlighted matches
     setupSearch(transactions, (filteredTransactions => {
         displayTable(filteredTransactions, true);
-    }))
+    }));
 }
 
 export function updateDashboard(stats){

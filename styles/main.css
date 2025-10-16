@@ -252,10 +252,11 @@ header {
 }
 
 .search-highlight{
-    background-color: lightgreen;
+    background-color: #ffeb3b;
     padding: 2px 4px;
     border-radius: 2px;
     font-weight: bold;
+    color: #000;
 }
 
 .search-container{
@@ -275,7 +276,13 @@ header {
     position: absolute;
     right: 12px;
     top: 50%;
-    color: gray;
+    transform: translateY(-50%);
+    color: #666
+}
+
+.search-container input::placeholder{
+    color: #999;
+    font-size: 0.9rem;
 }
 /*FORM STYLING*/
 .form-group{
