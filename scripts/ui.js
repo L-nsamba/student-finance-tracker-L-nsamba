@@ -275,7 +275,6 @@ export function updateLastSevenDaysChart(){
     if (statValueElement){
         //Description of the chart's html structure
         statValueElement.innerHTML = `
-            <h3>Last 7 Days</h3>
             <div class="simple-chart">
                 <div class="chart-bars">${barsHTML}</div>
                 <div class="chart-summary">
