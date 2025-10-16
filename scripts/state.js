@@ -80,7 +80,7 @@ export function getLastSevenDaysTransactions(){
     //Function displays transaction stats over past week on dashboard overview
     const lastSevenDays = new Date();
     lastSevenDays.setDate(lastSevenDays.getDate() - 7);
-    
+
 
     const recentTransactions = transactions.filter( t =>
         new Date(t.date) >= lastSevenDays
@@ -91,6 +91,26 @@ export function getLastSevenDaysTransactions(){
     const count = recentTransactions.length;
 
     return { total, count, transactions: recentTransactions};
+}
+
+export function getLastSevenDaysDailyTotals(){
+    const dailyTotals = [];
+
+    for (let i = 6; i >= 0; i--){
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const dateString = date.toISOString().split('T')[0];
+
+        const dayTransactions = transactions.filter(t => t.date === dateString);
+        const dayTotal = dayTransactions.reduce((sum, t) => sum + parseFloat(t.amount), 0);
+
+        dailyTotals.push({
+            date: dateString,
+            total: dayTotal,
+            count: dayTransactions.length
+        });
+    }
+    return dailyTotals
 }
 
 export function sortTransactions(transactions, sortBy){

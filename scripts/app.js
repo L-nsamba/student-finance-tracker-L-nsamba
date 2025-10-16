@@ -1,6 +1,6 @@
 
 import { addTransaction, convertCurrency, editTransaction, getDashboardStats, getTransactions, setTransactions } from "./state.js";
-import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting, setupEditAndDelete } from "./ui.js";
+import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting, setupEditAndDelete, updateLastSevenDaysChart } from "./ui.js";
 import { saveSettings, loadSettings, exportToJSON, importFromJSON } from "./storage.js";
 import { validateTransaction } from "./validators.js";
 
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function(){
     displayTable(transactions);
     updateDashboard(getDashboardStats());
     updateBudgetDisplay(settings);
+    updateLastSevenDaysChart();
     setupEditAndDelete();
 
 });
@@ -137,6 +138,7 @@ function handleTransactionSubmit(event){
     displayTable(transactions);
     updateDashboard(getDashboardStats());
     updateBudgetDisplay(settings);
+    updateLastSevenDaysChart();
 
     showSection('dashboard');
 }
@@ -249,6 +251,7 @@ function handleImport(event){
             setTransactions(importedTransactions);
             displayTable(importedTransactions);
             updateDashboard(getDashboardStats());
+            updateLastSevenDaysChart();
             alert(`Imported ${importedTransactions.length} transactions!`)
             announceStatus(`Successfully imported ${importedTransactions.length} transactions`);
             document.getElementById('import-file').value = '';

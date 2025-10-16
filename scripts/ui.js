@@ -1,6 +1,6 @@
 import { loadSettings } from "./storage.js";
 import { setupSearch } from "./search.js";
-import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats, getLastSevenDaysTransactions, convertCurrency } from "./state.js";
+import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats, getLastSevenDaysTransactions, getLastSevenDaysDailyTotals, convertCurrency } from "./state.js";
 
 export function showSection(sectionId){
     //Function gives nav-toggle & nav-links functionality
@@ -26,6 +26,7 @@ export function showSection(sectionId){
     if (sectionId === 'settings'){
         populateSettingsForm();
     }
+
 
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
@@ -240,4 +241,46 @@ export function setupEditAndDelete(){
             }
         }
     }
+}
+
+export function updateLastSevenDaysChart(){
+    const lastSevenDaysElement = document.querySelector('#last_seven_days')
+
+    if (!lastSevenDaysElement) return;
+
+    const settings = loadSettings();
+    const sevenDaysStats = getLastSevenDaysTransactions();
+
+    const dailyTotals = getLastSevenDaysDailyTotals();
+    const maxAmount = Math.max(...dailyTotals.map(day => day.total), 1);
+
+    const barsHTML = dailyTotals.map(day => {
+        const height = (day.total / maxAmount) *50;
+        const dayName = new Date(day.date).toLocaleDateString('en-US', {weekday: 'short'});
+
+        return `<div class="chart-bar" style="height: ${height}px"
+        title="${dayName}: ${settings.defaultCurrency} ${convertCurrency(day.total, 'UGX',
+        settings.defaultCurrency).toLocaleString()}"></div>`;
+
+    }).join('');
+
+    const convertedTotal = convertCurrency(sevenDaysStats.total, 'UGX', settings.defaultCurrency);
+
+    const statValueElement = lastSevenDaysElement.querySelector('.stat-value');
+
+
+    if (statValueElement){
+        statValueElement.innerHTML = `
+            <h3>Last 7 Days</h3>
+            <div class="simple-chart">
+                <div class="chart-bars">${barsHTML}</div>
+                <div class="chart-summary">
+                    ${settings.defaultCurrency} ${convertedTotal.toLocaleString()}
+
+                    <br><small>${sevenDaysStats.count} transactions</small>
+                </div>
+            </div>
+        `
+    };
+
 }
