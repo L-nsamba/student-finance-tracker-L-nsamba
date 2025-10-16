@@ -7,7 +7,7 @@ validation & search, basic persistence, and clean modular code.
 </p>
 
 **GitHub Pages Demo**: https://l-nsamba.github.io/student-finance-tracker-L-nsamba/ <br>
-**Video Demo**:  [currently in progress]
+**Video Demo**: https://youtu.be/95a7uKwjC_0
 
 ### 🏫 Learning Outcomes
 <li>Regex - Validates inputs and power search (including one backreferencing pattern)</li>
