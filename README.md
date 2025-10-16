@@ -6,7 +6,7 @@ that demonstrates semantic structure, mobile-first layouts, DOM manipulation, ev
 validation & search, basic persistence, and clean modular code.
 </p>
 
-**GitHub Pages Demo**:  [currently in progress] <br>
+**GitHub Pages Demo**: https://l-nsamba.github.io/student-finance-tracker-L-nsamba/ <br>
 **Video Demo**:  [currently in progress]
 
 ### 🏫 Learning Outcomes
