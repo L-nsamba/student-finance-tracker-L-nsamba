@@ -27,18 +27,18 @@ validation & search, basic persistence, and clean modular code.
 ### 📁 Project Structure
 ```plaintext
 📁 student-finance-tracker-L-nsamba/
-├── 📄index.html              
-├── 📁 styles/
-│   └── 📄 main.css
+├── 📄index.html                    #Contains the html code
+├── 📁 styles/            
+│   └── 📄 main.css                 #Styling the html
 ├── 📁 scripts/
-│   └── 📄 app.js
-│   └── 📄 state.js
-│   └── 📄 storage.js
-│   └── 📄 ui.js
-│   └── 📄 validators.js
-│   └── 📄 search.js
-├── 📄 seed.json
-├── 📄 tests.html
+│   └── 📄 app.js                   #Main app logic
+│   └── 📄 state.js                 #App state management
+│   └── 📄 storage.js               #localStorage
+│   └── 📄 ui.js                    #DOM manipulation functions
+│   └── 📄 validators.js            #Regex validation functions
+│   └── 📄 search.js                #Search + highlighting functions
+├── 📄 seed.json                    #Sample data
+├── 📄 tests.html                   #Contains regex tests
 └── 📄 README.md              
 ```
 ### 🛠️ Setup & Installation
@@ -71,9 +71,44 @@ ii. Open in ```index.html ``` in any browser
 4. ``` Space ``` - Toggle mobile menu
 5. ``` Skip Link ``` - Press Tab on page load to jump to main content
 
-### 🧑‍🦯 Screen Reader Support
+### 🧑‍🦯 Screen Reader Support & Accessibility Features
 <li>ARIA live regions announce status updates</li>
 <li>Form labels properly associated with inputs</li>
 <li>Semantic HTML structure for easy navigation</li>
+<li>Skip Navigation Link to jump directly to main contents</li>
+<li>Keyboard Navigation</li>
+<li>Focus Indicators</li>
+<li>Form Labels</li>
+<li>Color Contrast</li>
 
-🚧 TBC
+### 🔍 Regex Validation Patterns Used
+#### A). Form Validation Regex
+1. Description - ``` /^\S(?:.*\S)?$/ ``` (No leading/ trailing spaces)
+2. Amount - ``` /^(0|[1-9]\d*)(\.\d{1,2})?$/ ``` (Positive numbers)
+3. Date - ``` /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/ ``` (YYYY-MM-DD format)
+4. Category - ``` /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/ ``` (Letters, spaces, hypens)
+
+#### B). Advanced Regex (Search)
+1. Backward-reference - ``` /\b(\w+)\s+\1\b/i ``` (Find duplicate words e.g "tea tea at school":❌)
+2. Alternation - ``` /coffee|tea/i ``` (Find key words e.g "coffee or tea": ✅ ) 
+
+### 🧪 Testing
+#### Regex Validation Tests
+Open ``` tests.html ``` in your browser to run all regex validation tests. The tests cover the following:
+<li>Description validation (spaces, empty strings)</li>
+<li>Amount validation (decimals, leading zeros)</li>
+<li>Date validation (format, invalid dates)</li>
+<li>Category validation (special characters)</li>
+<li>Advanced regex (duplicate words)</li>
+
+### 🛠️ Tech Stack
+<li>1. Frontend: Vanilla HTML, CSS, JavaScript</li>
+<li>2. Deployment: GitHub Pages</li>
+
+### 👤 Author
+👨🏽‍💻**Leon Nsamba**<br>
+📧 **Email: l.nsamba@alustudent.com**<br>
+💻 **GitHub: [L-nsamba](https://github.com/L-nsamba)**
+
+
+
