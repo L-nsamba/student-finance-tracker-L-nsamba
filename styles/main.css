@@ -112,7 +112,7 @@ header {
 }
 
 #total_no_of_transactions{
-    background-color: pink;
+    background-color: #A4CCD9;
     width: 150px;
     height: 150px;
     text-align: center;
@@ -124,7 +124,7 @@ header {
 
 
 #total_spend{
-    background-color: rgb(27, 190, 103);
+    background-color: #A4CCD9;
     width: 150px;
     height: 150px;
     text-align: center;
@@ -136,7 +136,7 @@ header {
 
 
 #top_category{
-    background-color: rgb(152, 87, 8);
+    background-color: #A4CCD9;
     width: 150px;
     height: 150px;
     text-align: center;
@@ -148,7 +148,7 @@ header {
 
 
 #last_seven_days{
-    background-color: rgb(7, 57, 128);
+    background-color: #A4CCD9;
     width: 150px;
     height: 150px;
     text-align: center;
@@ -159,7 +159,7 @@ header {
 }
 
 #monthly_budget{
-    background-color: rgb(234, 14, 99);
+    background-color: #A4CCD9;
     width: 150px;
     height: 150px;
     text-align: center;
@@ -377,10 +377,10 @@ header {
 
 
 #about p{
-    margin-top: 30px;
+    margin-top: 40px;
     margin-bottom: 1rem;
     line-height: 1.6;
-    text-align: center;
+    text-align: left;
     display: flex;
     align-items: center;
 }
@@ -455,6 +455,7 @@ header {
 
     .page-section{
         padding: 0.5rem;
+        /* font-size: 20px; */
     }
 
     .transactions-table{
@@ -621,4 +622,5 @@ header {
     .nav-menu{
         display: flex !important;
     }
+
 }

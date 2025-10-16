@@ -1,4 +1,3 @@
-<!--Contain the html structure-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STUDENT FINANCE TRACKER</title>
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -16,9 +18,7 @@
         <p>Small Steps, Big Savings</p>
 
         <nav class="nav-bar">
-            <!--Creation of the nav bar that will contain links to
-            display corresponding output upon the users request.
-            The functionality will be implemented with JS-->
+
             <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
 
             <ul class="nav-menu">
@@ -35,10 +35,6 @@
     <main id="main-content">
 
         <section id="dashboard" class="page-section active">
-
-            <!--This section contains the dashboard overview
-            and what the user originally sees before selecting
-            a given option in the user menu-->
 
             <div class="analytics-container">
 
@@ -72,12 +68,6 @@
         </section>
 
 
-
-
-        <!--The sections below are hidden in the menu and
-        when menu option is clicked it adjusts the screen
-        output with the help of JS-->
-
         <section id="table" class="page-section hidden">
             <h2>All Transactions</h2>
 
@@ -109,7 +99,6 @@
                     </thead>
 
                     <tbody>
-                        <!--js will populate-->
                         <tr>
                             <td data-label="Description">Sample transactions</td>
                             <td data-label="Amount">UGX 15,000</td>
@@ -130,7 +119,6 @@
             <h2>Add New Transactions</h2>
 
             <form id="transactions-form">
-                <!--form will allow user to add new info-->
                 <div class="form-group">
                     <label for="description">Description</label>
                     <input type="text" id="description" name="description" required>
@@ -138,7 +126,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="amount">Amount:</label>
+                    <label for="amount">Amount in UGX:</label>
                     <input type="number" id="amount"name="amount" step="100" required>
                     <div class="error-message" id="amount-error"></div>
                 </div>
@@ -183,7 +171,6 @@
 
         <section id="settings" class="page-section hidden">
             <h2>Settings</h2>
-                <!--settings content will appear here-->
                 <form id="settings-form">
                     <div class="form-group">
                         <label for="currency">Currency Converting To:</label>
@@ -194,7 +181,6 @@
                         </select>
                     </div>
 
-                    <!--Creation of currency rates-->
                     <div class="form-group">
                         <h3>Exchange Rates (PER 1 UGX)</h3>
                         <label for="ksh-rate">KSH RATE:</label>
@@ -203,9 +189,6 @@
                         <label for="rwf-rate">RWF RATE:</label>
                         <input type="number" id="rwf-rate" name="rwf-rate" step="0.001" value="0.32" readonly>
                     </div>
-
-                    <!--Addition of save button-->
-
 
 
                     <div class="form-group">
@@ -221,8 +204,6 @@
 
         <section id="about" class="page-section hidden">
             <h2>About</h2>
-            <!--about content-->
-
             <p>💰Student Finance Tracker - Small Steps, Big Savings</p>
             <p>👨🏾‍💻Created by Leon Nsamba</p>
             <p>📧Contact: l.nsamba@alustudent.com</p>
@@ -232,8 +213,6 @@
     </main>
 
     <div id="status-announcement" aria-live="polite" class="screen-reader" aria-atomic="true"></div>
-
-
 
     <script type="module" src="scripts/app.js"></script>
 </body>

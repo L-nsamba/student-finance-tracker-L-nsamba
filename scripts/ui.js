@@ -15,6 +15,12 @@ export function showSection(sectionId){
         const transactions = getTransactions();
         setupSorting();
         initializeSearch(transactions)
+        displayTable(transactions);
+    }
+
+    if (sectionId === 'card-view'){
+        const transactions = getTransactions();
+        displayTable(transactions);
     }
 
     if (sectionId === 'settings'){
@@ -73,34 +79,58 @@ export function populateSettingsForm(){
 
 
 export function displayTable(transactions, isSearchResult = false){
-    //isSearchResult parameter displays highlighted text if true and normal transactions if false
+    //This function handles both table and card creation
     const tbody = document.querySelector('.transactions-table tbody');
+    const cardsContainer = document.querySelector('.cards-container');
     const settings = loadSettings();
 
-    //Returns error message if transaction table is empty
     if (transactions.length === 0){
-        tbody.innerHTML = '<tr><td colspan="5"> No transactions yet</td></tr>';
+        if (tbody) tbody.innerHTML = '<tr><td colspan="5"> No transactions yet</td></tr>';
+
+        if(cardsContainer) cardsContainer.innerHTML = '<p class="no-transactions">No transactions yet</p>';
         return;
+
     }
 
-    //This html content will be added each time a new transaction is created
-    tbody.innerHTML = transactions.map(transaction => `
-        <tr data-id="${transaction.id}">
-            <td data-label="Description">
-            ${isSearchResult ? transaction.description: transaction.originalDescription || transaction.description}
-            </td>
+    //This if condition handles table creation for table view
+    if (tbody){
+        tbody.innerHTML = transactions.map(transaction => `
+            <tr data-id="${transaction.id}">
+                <td data-label="Description">
+                ${isSearchResult ? transaction.description: transaction.originalDescription || transaction.description}
+                </td>
 
-            <td data-label="Amount">
-            ${settings.defaultCurrency}
-            ${convertCurrency(transaction.amount, 'UGX', settings.defaultCurrency).toLocaleString()}
-            </td>
-            <td data-label="Category">${transaction.category}</td>
-            <td data-label="Date">${transaction.date}</td>
-            <td data-label="Actions">
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
-            </td>
-        </tr>`).join('');
+                <td data-label="Amount">
+                ${settings.defaultCurrency}
+                ${convertCurrency(transaction.amount, 'UGX', settings.defaultCurrency).toLocaleString()}
+                </td>
+                <td data-label="Category">${transaction.category}</td>
+                <td data-label="Date">${transaction.date}</td>
+                <td data-label="Actions">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>`).join('');
+    }
+
+    if (cardsContainer) {
+
+        //This if condition handles card creation for card view
+        cardsContainer.innerHTML = transactions.map(transaction => `
+            <div class="transaction-card" data-id="${transaction.id}">
+                <h3>${transaction.description}</h3>
+                <p class="card-amount">${settings.defaultCurrency}
+                 ${convertCurrency(transaction.amount, 'UGX', settings.defaultCurrency).toLocaleString()}
+                </p>
+                <p class="card-category">${transaction.category}</p>
+                <p class="card-date">${transaction.date}</p>
+                <div class="card-actions">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            </div>
+            `).join('');
+    }
 }
 
 export function initializeSearch(transactions){

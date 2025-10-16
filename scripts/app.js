@@ -43,14 +43,29 @@ function updateBudgetDisplay(settings){
         //Displays monthly budget numeric value on html dashboard overview
         monthlyBudgetElement.textContent = `${settings.defaultCurrency} ${monthlyBudgetInSelectedCurrency.toLocaleString()}`;
 
+        const statusScreenReader = document.getElementById('status-announcement');
+
         if (remaining >= 0){
             budgetRemainingElement.textContent = `${settings.defaultCurrency} ${remaining.toLocaleString()} remaining`;
 
             budgetRemainingElement.style.color = '#27ae60'
+
+            //This if condition is only triggered if underbudget
+            if (statusScreenReader && monthlyBudgetInUGX > 0){
+                statusScreenReader.setAttribute('aria-live', 'polite');
+                statusScreenReader.textContent = `Budget status: ${settings.defaultCurrency} ${remaining.toLocaleString()} remaining`;
+            }
         }else{
-            budgetRemainingElement.textContent = `${settings.defaultCurrency} ${Math.abs(remaining).toLocaleString()} over budget`;
-            budgetRemainingElement.style.color = '#e74c3c'
+            const overBudget = Math.abs(remaining);
+            budgetRemainingElement.textContent = `${settings.defaultCurrency} ${overBudget.toLocaleString()} overbudget`;
+            budgetRemainingElement.style.color = '#e74c3c';
+
+            if (statusScreenReader && monthlyBudgetInUGX > 0){
+                statusScreenReader.setAttribute('aria-live', 'assertive');
+                statusScreenReader.textContent = `Warning: You are ${settings.defaultCurrency} ${overBudget.toLocaleString()} over budget`;
+            }
         }
+
     }
 }
 
