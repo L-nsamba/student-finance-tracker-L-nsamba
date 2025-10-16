@@ -1,4 +1,5 @@
 export function compileRegex(input, flags = 'i'){
+    //Function prevents crashing of program incase of regex errors
     try{
         return input ? new RegExp(input, flags) : null;
     }catch(error){
@@ -7,14 +8,14 @@ export function compileRegex(input, flags = 'i'){
 }
 
 export function highlightMatches(text, regex){
+    //Highlighting of text that matches users search criteria
     if(!regex || !text) return text;
 
     return text.replace(regex, match => `<mark class="search-highlight">${match}</mark>`);
 }
 
 export function searchTransactions(transactions, searchPattern){
-
-    //Checks if the search is empty
+    //If condition facilitates the searching through description field
     if (!searchPattern.trim()){
         return transactions.map(transaction => ({
             ...transaction,
@@ -22,9 +23,9 @@ export function searchTransactions(transactions, searchPattern){
         }));
     }
 
-
     const regex = compileRegex(searchPattern, 'gi');
     if(!regex){
+        //The regex defined ensures case insensitivity
         return transactions.map(transaction => ({
             ...transaction,
             originalDescription: transaction.description
@@ -65,22 +66,16 @@ export function setupSearch(transactions, renderFunction){
         }, 500)
     });
 
-    /*When the user hovers over the search box it will give them these hints
-    of valid regex patterns*/
+
     searchInput.setAttribute('title', 'Supports regex patterns. Examples: /latte|milk/i, /\d{4,}/, /^lunch/');
 }
 
-
 export const financeRegexPatterns = {
-
+    //This shows how I used advanced regex patterns with backreferencing
+    //This code is not currently called anywhere
     hasDecimals: /\.\d{2}\b/,
-
     foodKeywords: /(latte|coffee|tea|dinner|lunch|breakfast|snack)/i,
-
     duplicateWords: /\b(\w+)\s+\1\b/i,
-
     largeAmounts: /\b(5\d{4,}|\d{6,})\b/,
-
     categorySearch: /@(\w+)/,
-
 }

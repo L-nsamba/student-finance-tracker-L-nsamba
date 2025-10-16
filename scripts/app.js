@@ -5,11 +5,11 @@ import { saveSettings, loadSettings, exportToJSON, importFromJSON } from "./stor
 import { validateTransaction } from "./validators.js";
 
 document.addEventListener('DOMContentLoaded', function(){
+    //Calling functions to execute tasks defined within them
     setupNavigation();
     setupFormHandling();
     setupImportExport();
 
-    //Loads initial data on the dashboard overview
     const transactions = getTransactions();
     const settings = loadSettings();
 
@@ -22,22 +22,14 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function updateBudgetDisplay(settings){
+    //Function contains the logic that adjusts content in features on dashboard overview
 
-    /*Function contains the logic to adjust the monthly budget and total spend
-    on the dashboard overview. It also carries out the  calculations for amount remaining*/
-
-
-   //These constants defined are used to access the corresponding ids and classes in the html
     const monthlyBudgetElement = document.querySelector('#monthly_budget .stat-value');
-
     const budgetRemainingElement = document.querySelector('#monthly_budget .budget-remaining');
 
-    /*This if condition only returns if both elements are
-    present and accessible within the html */
     if (monthlyBudgetElement && budgetRemainingElement){
 
         const stats = getDashboardStats();
-
 
         //Constant defined will either display the new updated amount or a default (0)
         const monthlyBudget = settings.monthlyBudget || 0;
@@ -60,8 +52,6 @@ function updateBudgetDisplay(settings){
 
 function setupFormHandling(){
 
-    /*The constants defined below access the transactions-form and
-    settings-form within html and give them functionality (submit) */
     const transactionForm = document.getElementById('transactions-form');
     transactionForm.addEventListener('submit', handleTransactionSubmit);
 
@@ -103,8 +93,10 @@ function handleTransactionSubmit(event){
 
     if (isEditing){
         editTransaction(isEditing, transaction);
+        announceStatus('Transaction updated successfully');
     }else{
         addTransaction(transaction);
+        announceStatus('Transaction added successfully');
     }
 
     //Clearing the old saved transaction from system memory
@@ -114,7 +106,6 @@ function handleTransactionSubmit(event){
     const submitBtn = form.querySelector('.submit-btn');
     submitBtn.textContent = 'Add Transaction';
 
-    //Constants defined to display the saved transactions and settings
     const transactions = getTransactions();
     const settings = loadSettings();
 
@@ -145,7 +136,20 @@ function showError(field, message){
     }
 }
 
+function announceStatus(message){
+    //This function contains the logic for announcements for screen readers
+    const statusSr = document.getElementById('status-announcement');
+    if (statusSr){
+        statusSr.textContent = message;
+
+        setTimeout(() => {
+            statusSr.textContent = '';
+        }, 3000);
+    }
+}
+
 function handleSettingsSubmit(event){
+    //This function defines the predefined settings for the settings//currency page
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -160,16 +164,15 @@ function handleSettingsSubmit(event){
     };
 
     saveSettings(settings)
-
-
-
     updateBudgetDisplay(settings);
     updateDashboard(getDashboardStats());
 
     alert('Settings saved successfully')
+    announceStatus('Settings saved successfully');
 }
 
 function setupImportExport(){
+    //Function gives the import and export JSON buttons clickable functionality
     const exportBtn = document.getElementById('export-btn');
     const importFile = document.getElementById('import-file');
 
@@ -183,13 +186,12 @@ function setupImportExport(){
 }
 
 function handleExport(){
-
+    //Function allows user to download the JSON file I have created
     const transactions = getTransactions();
     if (transactions.length === 0){
         alert('No transactions to export!')
         return;
     }
-
 
     const jsonData = JSON.stringify(transactions, null, 2);
 
@@ -207,9 +209,11 @@ function handleExport(){
     URL.revokeObjectURL(url);
 
     alert('Exported successfully!')
+    announceStatus(`Exported ${transactions.length} transactions successfully`)
 }
 
 function handleImport(event){
+    //Function allows user to use their own JSON file
     const file = event.target.files[0];
     if (!file) return;
 
@@ -221,6 +225,7 @@ function handleImport(event){
             displayTable(importedTransactions);
             updateDashboard(getDashboardStats());
             alert(`Imported ${importedTransactions.length} transactions!`)
+            announceStatus(`Successfully imported ${importedTransactions.length} transactions`);
 
         } catch(error){
             alert('Import failed: ' + error.message)

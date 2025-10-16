@@ -1,14 +1,11 @@
-
-//Definition of keys to identify what's in localStorage
+//Definition of keys in localStorage
 const STORAGE_KEY = "finance-tracker-data";
 const SETTINGS_KEY = "finance-tracker-settings"
 
 export function loadTransactions(){
     try{
-        //Retrival of data from localStorage
+        //Retrival of data from localStorage & conversion to JSON string
         const stored = localStorage.getItem(STORAGE_KEY);
-
-        //Conversion into JSON string
         return stored ? JSON.parse(stored): []
     }catch (error){
         console.error('Error loading transactions:', error);
@@ -16,7 +13,6 @@ export function loadTransactions(){
     }
 }
 
-//Function triggers the saving of new transactions if all fields meet criteria
 export function saveTransactions(transactions){
     try{
         localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
@@ -28,11 +24,7 @@ export function saveTransactions(transactions){
 }
 
 export function exportToJSON(transactions){
-    /*
-    Function takes an array list of transactions and
-    converts them to JSON string
-    */
-
+    //Function facilitates the downloading of JSON files
     const data = {
         version: "1.0",
         exportedAt: new Date().toISOString(),
@@ -42,6 +34,7 @@ export function exportToJSON(transactions){
 }
 
 export function importFromJSON(jsonString){
+    //Function facilitates the uploading of JSON files
     try{
         const transactions = JSON.parse(jsonString);
 
@@ -55,7 +48,7 @@ export function importFromJSON(jsonString){
 }
 
 export function getDefaultSettings(){
-    //Defines the parameters for the default settings
+    //Determines the default settings user has on first app usage
     return{
         defaultCurrency: 'UGX',
         monthlyBudget: 0,
@@ -65,12 +58,9 @@ export function getDefaultSettings(){
 
 
 export function saveSettings(settings){
-    //Stores the defined settings
     try{
-        /*Converts settings object into JSON string since localStorage
-        can only store text*/
+        //Conversion of text into JSON string
         localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-
         return true;
     } catch (error){
         console.error('Error saving settings', error)
@@ -84,22 +74,17 @@ export function loadSettings(){
         const stored = localStorage.getItem(SETTINGS_KEY);
 
         if(!stored){
-            //Determines the default settings for currency & exchange rates
+            //Sets these currency settings to default
             const defaultSettings = {
                 defaultCurrency: 'UGX',
                 monthlyBudget: 0,
                 exchangeRates: {KSH: 0.024, RWF: 0.32}
             };
 
-            /*Calling of function to save default settings to display if user
-            has not specified any currency*/
             saveSettings(defaultSettings)
-
             return defaultSettings;
         }
-
-        /*Returns the saved settings from localStorage and
-        converts JSON string of stored settings to a JS object*/
+        //Conversion of JSON string to JSON object
         return JSON.parse(stored);
 
     }catch (error){

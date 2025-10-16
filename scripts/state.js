@@ -5,18 +5,17 @@ import { loadSettings } from "./storage.js";
 let transactions = loadTransactions();
 
 export function getTransactions(){
-    //Retrival of saved transactions if any
     return transactions;
 }
 
 export function setTransactions(newTransactions){
+    //Allows user to add new transaction that will be stored in localStorage
     transactions = newTransactions;
     saveTransactions(transactions);
     return transactions;
 }
 
 export function addTransaction(transaction){
-
     //Creation of unique ID's and timestamps
     const newTransaction = {
         id: 'txn_' + Date.now(),
@@ -26,18 +25,14 @@ export function addTransaction(transaction){
         updatedAt: new Date().toISOString()
     };
 
-    //Adds to the current data
+    //Addition of data to js object, saving to localStorage and returning new transactions
     transactions.push(newTransaction);
-
-    //Saves to localStorage
     saveTransactions(transactions);
-
-    //returns updated transaction list
     return newTransaction;
 }
 
-//Currency convert logic in settings section
 export function convertCurrency(amount, fromCurrency, toCurrency){
+    //Currency conversion logic on settings page
     const settings = loadSettings();
 
     if (fromCurrency === toCurrency) return amount;
@@ -56,24 +51,21 @@ export function convertCurrency(amount, fromCurrency, toCurrency){
 }
 
 export function getDashboardStats(){
-    //Computes dashboard summary statistics
-
-    //Constants defined to access saved settings and transactions
     const settings = loadSettings();
     const totalTransactions = transactions.length;
 
-    //Conversion of total spend to selected currency
+    //Conversion to default currency (UGX)
     const totalSpendUGX = transactions.reduce((sum, t) => sum + parseFloat(t.amount), 0);
     const totalSpend = convertCurrency(totalSpendUGX, 'UGX', settings.defaultCurrency);
 
-    //Determines how many times each category appears and stores in an object
+    //Determines how many appeareances each category item has
     const categoryCount = {};
     transactions.forEach(t => {
         categoryCount[t.category] = (categoryCount[t.category] || 0) + 1;
     });
 
     const topCategory = Object.keys(categoryCount).reduce((a,b) =>
-        //Identifys the key,value pair which has most appearances in the object
+        //Determines the top category by identifying the item with highest frequency in categoryCount
         categoryCount[a] > categoryCount[b] ? a : b, 'None');
 
     return {
@@ -85,11 +77,12 @@ export function getDashboardStats(){
 }
 
 export function sortTransactions(transactions, sortBy){
+    //Functions enables sorting in ascending order
     const sorted = [...transactions];
 
     sorted.sort((a,b) => {
-        // a & b represent transactions being compared
         switch(sortBy){
+            //Comparison of elements to determine sort order
             case 'description':
                 return a.description.localeCompare(b.description);
 
@@ -113,7 +106,7 @@ export function sortTransactions(transactions, sortBy){
 export function editTransaction(id, updatedData){
     const transaction = transactions.find(t => t.id === id);
     if (transaction) {
-        //The if condition allows user to edit a saved record and assigns it a new timestamp
+        //Allows assignment of new timestamp
         Object.assign(transaction, updatedData, {
             updatedAt: new Date().toISOString()
         });
@@ -124,6 +117,7 @@ export function editTransaction(id, updatedData){
 }
 
 export function deleteTransaction(id){
+    //Allows deleting of previous transactions
     if(confirm('Are you sure you want to delete this transaction?')){
         transactions = transactions.filter(t => t.id !== id);
         saveTransactions(transactions);

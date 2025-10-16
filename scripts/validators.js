@@ -1,7 +1,5 @@
 
 export function validateDescription(description){
-
-    //Ensures description is not left empty
     if(!description || description.trim() === ''){
         return{
             isValid: false,
@@ -17,10 +15,7 @@ export function validateDescription(description){
     }
 }
 
-
 export function validateAmount(amount){
-
-    //Ensures amount is not left empty
     if(!amount && amount !== 0){
         return{
             isValid: false,
@@ -29,12 +24,10 @@ export function validateAmount(amount){
     }
 
     const regex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
-    /*
-    Pattern for amount
+    /*Pattern for amount
     1.Allows 0 or numbers that dont start with leading zeros
     2. Only positive numbers
-    3. Maximum two decimal places
-    */
+    3. Maximum two decimal places*/
 
     return{
         isValid: regex.test(amount.toString()),
@@ -51,15 +44,13 @@ export function validateDate(date){
     }
 
     const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-    /*
-    Pattern for date
+    /*Pattern for date
     1. Ensures it starts with 4 digits for the year
     2. The 4 digits are then followed by '-'
     3. Then followed by two digits for the month with max being 12
     4. Then followed with a dash and another two digits for date
     5. The leading digit must be either 1 or 0 for month
-    6. The leading digit must be between 0 and 3 max for date
-    */
+    6. The leading digit must be between 0 and 3 max for date*/
 
     return{
         isValid: regex.test(date),
@@ -75,12 +66,10 @@ export function validateCategory(category){
         };
     }
     const regex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
-    /*
-    Pattern for category
+    /* Pattern for category
     1. Category must start with a letter (not case-sensitive)
     2. Then followed by any other letters only
-    3. It can contain a hypen or space as separator if words are spaced
-    */
+    3. It can contain a hypen or space as separator if words are spaced*/
 
     return{
         isValid: regex.test(category) && category !== '',
@@ -90,10 +79,8 @@ export function validateCategory(category){
 
 export function validateNoDuplicateWords(text){
     const regex = /\b(\w+)\s+\1\b/i;
-    /*
-    Pattern explanation
-    1. Ensures no words are repeated within description
-    */
+    /*Pattern explanation
+    1. Ensures no words are repeated within description */
 
     return{
         isValid: !regex.test(text),
@@ -105,11 +92,9 @@ export function validateDescriptionStrength(text){
     //This function ensures description is of valid characters and length
 
     const regex = /^(?=(?:\S+\s+){2,}\S+$)[A-Za-z0-9\s.,!?]+$/;
-    /*
-    Pattern for validation of description
+    /*Pattern for validation of description
     1. Ensures atleast three spaces must appear to separate words in description
-    2. Ensures no special characters expect punctuation
-    */
+    2. Ensures no special characters expect punctuation*/
 
     return{
         isValid: regex.test(text),
@@ -122,9 +107,7 @@ export function validateTransaction(transaction){
     //Array list to store the errors
     const errors = [];
 
-    /*The if conditions below determine whether the content within
-    the form is valid ie true or false to either reject it from
-    entering the system or successfully accept the info entered*/
+    //The if conditions below determine the validity of transaction fields
 
     const descValidation = validateDescription(transaction.description);
 

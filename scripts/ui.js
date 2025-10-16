@@ -2,8 +2,8 @@ import { loadSettings } from "./storage.js";
 import { setupSearch } from "./search.js";
 import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats } from "./state.js";
 
-//Contains DOM manipulation functions
 export function showSection(sectionId){
+    //Function gives nav-toggle & nav-links functionality
     document.querySelectorAll('.page-section').forEach(section => {
         section.classList.add('hidden');
     })
@@ -30,9 +30,8 @@ export function showSection(sectionId){
     closeMobileMenu();
 }
 
-
-//Responsible for controlling the general menu toggle bar functionality
 export function setupNavigation(){
+    //Function triggers the nav-links to display content upon being clicked
     const navLinks = document.querySelectorAll('.nav-link');
 
     navLinks.forEach(link => {
@@ -43,27 +42,27 @@ export function setupNavigation(){
         });
     });
 
-    //Calling the setup function to trigger required action
     setupMobileMenu();
 }
 
-//Responsible for triggering the menu toggle bar opening
 export function setupMobileMenu(){
+    //Responsible for triggering the menu toggle bar opening
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
 
     navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
+        const isExpanded = navMenu.classList.toggle('active');
+        navToggle.setAttribute('aria-expanded', isExpanded);
     })
 }
 
-//Responsible for triggering the menu toggle bar closing
 export function closeMobileMenu(){
     const navMenu = document.querySelector('.nav-menu');
     navMenu.classList.remove('active');
 }
 
 export function populateSettingsForm(){
+    //Loads initial default settings
     const settings = loadSettings();
 
     document.getElementById('currency').value = settings.defaultCurrency;
@@ -75,7 +74,6 @@ export function populateSettingsForm(){
 
 export function displayTable(transactions, isSearchResult = false){
     //isSearchResult parameter displays highlighted text if true and normal transactions if false
-
     const tbody = document.querySelector('.transactions-table tbody');
     const settings = loadSettings();
 
@@ -85,10 +83,7 @@ export function displayTable(transactions, isSearchResult = false){
         return;
     }
 
-    /*
-    Adjusting the html to change output on transaction screen when
-    user searches for specific element
-     */
+    //This html content will be added each time a new transaction is created
     tbody.innerHTML = transactions.map(transaction => `
         <tr data-id="${transaction.id}">
             <td data-label="Description">
@@ -113,8 +108,7 @@ export function initializeSearch(transactions){
 }
 
 export function updateDashboard(stats){
-    //Updates dashboard overview elements
-
+    //Function ensures that added transactions reflect on dashboard overview
     const totalSpendElement = document.querySelector('#total_spend .stat-value');
     const totalTransactionsElement = document.querySelector('#total_no_of_transactions .stat-value');
     const topCategoryElement = document.querySelector('#top_category .stat-value');
@@ -134,6 +128,7 @@ export function updateDashboard(stats){
 
 
 export function setupSorting(){
+    //Function controls the sorting according to category on the table view page
     const headers = document.querySelectorAll('.transactions-table th');
 
     headers.forEach(header => {
@@ -148,6 +143,7 @@ export function setupSorting(){
 }
 
 export function setupEditAndDelete(){
+    //Function gives the edit and delete buttons functionality
     const table = document.querySelector('.transactions-table');
 
     table.addEventListener('click', (event) => {
@@ -163,16 +159,15 @@ export function setupEditAndDelete(){
             const transaction = transactions.find(t => t.id === transactionId);
 
             if (transaction){
+                //Fetching the newly defined parameters
                 document.getElementById('description').value = transaction.description;
                 document.getElementById('amount').value = transaction.amount;
                 document.getElementById('category').value = transaction.category;
                 document.getElementById('date').value = transaction.date;
 
-                //Accessing the transaction form from html to reflect the edit
                 const form = document.getElementById('transactions-form')
                 form.dataset.editingId = transactionId;
 
-                //Changing the display content on button from edit to update after first edit
                 const submitBtn = form.querySelector('.submit-btn');
                 submitBtn.textContent = 'Update Transaction';
 
@@ -182,6 +177,7 @@ export function setupEditAndDelete(){
 
         if (button.classList.contains('delete-btn')){
             const transactionId = row.dataset.id;
+            //Removal of deleted item history from dashboard overview
             if (deleteTransaction(transactionId)){
                 const transactions = getTransactions();
                 displayTable(transactions);
