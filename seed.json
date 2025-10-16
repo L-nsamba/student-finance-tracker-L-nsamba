@@ -3,7 +3,7 @@
     "description": "Lunch at cafeteria",
     "category": "Food",
     "amount": 15000,
-    "date": "2025-09-25",
+    "date": "2025-10-16",
     "createdAt": "2025-09-25T10:30:00.000Z",
     "updatedAt": "2025-09-25T10:30:00.000Z"
 },
@@ -12,7 +12,7 @@
     "description":"Chemistry textbook",
     "amount": 90000,
     "category":"Books",
-    "date":"2025-09-23",
+    "date":"2025-10-15",
     "createdAt": "2025-09-23T14:20:00.000Z",
     "updatedAt": "2025-09-23T14:20:00.000Z"
 },
@@ -21,7 +21,7 @@
     "description":"Bus pass",
     "amount": 50000,
     "category":"Transport",
-    "date":"2025-09-20",
+    "date":"2025-10-14",
     "createdAt": "2025-09-20T08:15:00.000Z",
     "updatedAt": "2025-09-20T08:15:00.000Z"
 },
@@ -30,7 +30,7 @@
     "description":"Coffee with friends",
     "amount":10000,
     "category":"Entertainment",
-    "date":"2025-09-28",
+    "date":"2025-10-13",
     "createdAt": "2025-09-29T16:45:00.000Z",
     "updatedAt": "2025-09-29T16:45:00.000Z"
 
@@ -41,7 +41,7 @@
     "description":"Coffee coffee duplicate test",
     "amount": 10000,
     "category":"Food",
-    "date":"2025-09-29",
+    "date":"2025-10-11",
     "createdAt": "2025-09-29T12:30:00.000Z",
     "updatedAt": "2025-09-29T12:30:00.000Z"
 },
@@ -51,7 +51,7 @@
     "description": "Movie night",
     "amount": 25000,
     "category":"Entertainment",
-    "date":"2025-09-17",
+    "date":"2025-10-17",
     "createdAt": "2025-09-29T09:00:00.000Z",
     "updatedAt": "2025-09-29T09:00:00.000Z"
 
@@ -62,7 +62,7 @@
     "description":"Samosa from Charlie's canteen",
     "amount": 5000,
     "category":"Food",
-    "date":"2025-09-27",
+    "date":"2025-10-16",
     "createdAt": "2025-09-29T20:00:00.000Z",
     "updatedAt": "2025-09-29T20:00:00.000Z"
 },
@@ -72,7 +72,7 @@
     "description":"Physics notes booklet",
     "amount": 20000,
     "category":"Books",
-    "date":"2025-09-22",
+    "date":"2025-10-10",
     "createdAt": "2025-09-29T11:10:00.000Z",
     "updatedAt": "2025-09-29T11:10:00.000Z"
 
@@ -83,7 +83,7 @@
     "description":"Motorbike to campus",
     "amount": 2000,
     "category":"Transport",
-    "date":"2025-09-30",
+    "date":"2025-10-11",
     "createdAt": "2025-09-29T9:45:00.000Z",
     "updatedAt": "2025-09-29T9:45:00.000Z"
 
@@ -94,7 +94,7 @@
     "description":"Uber to Acacia Mall",
     "amount": 27000,
     "category":"Transport",
-    "date":"2025-09-26",
+    "date":"2025-10-18",
     "createdAt": "2025-09-29T20:00:00.000Z",
     "updatedAt": "2025-09-29T20:00:00.000Z"
 
