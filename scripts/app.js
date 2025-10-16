@@ -1,7 +1,7 @@
 
 import { addTransaction, convertCurrency, editTransaction, getDashboardStats, getTransactions, setTransactions } from "./state.js";
-import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting, setupEditAndDelete, updateLastSevenDaysChart } from "./ui.js";
-import { saveSettings, loadSettings, exportToJSON, importFromJSON } from "./storage.js";
+import { showSection, setupNavigation, displayTable, updateDashboard,setupEditAndDelete, updateLastSevenDaysChart } from "./ui.js";
+import { saveSettings, loadSettings,importFromJSON } from "./storage.js";
 import { validateTransaction } from "./validators.js";
 
 document.addEventListener('DOMContentLoaded', function(){

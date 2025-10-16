@@ -246,6 +246,7 @@ export function setupEditAndDelete(){
 }
 
 export function updateLastSevenDaysChart(){
+    //Creation of the logic for the chart
     const lastSevenDaysElement = document.querySelector('#last_seven_days')
 
     if (!lastSevenDaysElement) return;
@@ -272,6 +273,7 @@ export function updateLastSevenDaysChart(){
 
 
     if (statValueElement){
+        //Description of the chart's html structure
         statValueElement.innerHTML = `
             <h3>Last 7 Days</h3>
             <div class="simple-chart">
