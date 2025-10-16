@@ -1,5 +1,5 @@
 
-import { addTransaction, editTransaction, getDashboardStats, getTransactions, setTransactions } from "./state.js";
+import { addTransaction, convertCurrency, editTransaction, getDashboardStats, getTransactions, setTransactions } from "./state.js";
 import { showSection, setupNavigation, displayTable, updateDashboard, initializeSearch, setupSorting, setupEditAndDelete } from "./ui.js";
 import { saveSettings, loadSettings, exportToJSON, importFromJSON } from "./storage.js";
 import { validateTransaction } from "./validators.js";
@@ -31,13 +31,17 @@ function updateBudgetDisplay(settings){
 
         const stats = getDashboardStats();
 
-        //Constant defined will either display the new updated amount or a default (0)
-        const monthlyBudget = settings.monthlyBudget || 0;
+        //These constants defined will ensure accurate currency conversion, with default being UGX
+        const monthlyBudgetInUGX = settings.monthlyBudget || 0;
+        const monthlyBudgetInSelectedCurrency = settings.defaultCurrency === 'UGX'
+        ? monthlyBudgetInUGX
+        :convertCurrency(monthlyBudgetInUGX, 'UGX', settings.defaultCurrency);
+
         const totalSpend = stats.totalSpend || 0;
-        const remaining = monthlyBudget - totalSpend;
+        const remaining = monthlyBudgetInSelectedCurrency - totalSpend;
 
         //Displays monthly budget numeric value on html dashboard overview
-        monthlyBudgetElement.textContent = `${settings.defaultCurrency} ${monthlyBudget.toLocaleString()}`;
+        monthlyBudgetElement.textContent = `${settings.defaultCurrency} ${monthlyBudgetInSelectedCurrency.toLocaleString()}`;
 
         if (remaining >= 0){
             budgetRemainingElement.textContent = `${settings.defaultCurrency} ${remaining.toLocaleString()} remaining`;

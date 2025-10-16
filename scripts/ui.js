@@ -1,6 +1,6 @@
 import { loadSettings } from "./storage.js";
 import { setupSearch } from "./search.js";
-import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats } from "./state.js";
+import { getTransactions, sortTransactions, editTransaction, deleteTransaction, getDashboardStats, getLastSevenDaysTransactions, convertCurrency } from "./state.js";
 
 export function showSection(sectionId){
     //Function gives nav-toggle & nav-links functionality
@@ -90,6 +90,11 @@ export function displayTable(transactions, isSearchResult = false){
             ${isSearchResult ? transaction.description: transaction.originalDescription || transaction.description}
             </td>
 
+            <td data-label="Amount">
+            ${settings.defaultCurrency}
+            ${convertCurrency(transaction.amount, 'UGX', settings.defaultCurrency.toLocaleString())}
+            </td>
+
             <td data-label="Amount">${settings.defaultCurrency} ${transaction.amount.toLocaleString()}</td>
             <td data-label="Category">${transaction.category}</td>
             <td data-label="Date">${transaction.date}</td>
@@ -112,6 +117,8 @@ export function updateDashboard(stats){
     const totalSpendElement = document.querySelector('#total_spend .stat-value');
     const totalTransactionsElement = document.querySelector('#total_no_of_transactions .stat-value');
     const topCategoryElement = document.querySelector('#top_category .stat-value');
+    const lastSevenDaysElement = document.querySelector('#last_seven_days .stat-value')
+    const sevenDaysStats = getLastSevenDaysTransactions();
 
     if (totalSpendElement){
         totalSpendElement.textContent = `${stats.currency} ${stats.totalSpend.toLocaleString()}`;
@@ -124,6 +131,15 @@ export function updateDashboard(stats){
     if (topCategoryElement){
         topCategoryElement.textContent = stats.topCategory;
     }
+
+    if(lastSevenDaysElement){
+        //Addition of currency conversion logic whereby UGX is default currency
+        const settings = loadSettings();
+        const convertedTotal = convertCurrency(sevenDaysStats.total, 'UGX', settings.defaultCurrency)
+
+        lastSevenDaysElement.textContent =
+        `${stats.currency} ${convertedTotal.toLocaleString()} ${sevenDaysStats.count} transactions`
+    };
 }
 
 

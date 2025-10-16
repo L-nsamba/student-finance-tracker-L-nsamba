@@ -76,6 +76,23 @@ export function getDashboardStats(){
     };
 }
 
+export function getLastSevenDaysTransactions(){
+    //Function displays transaction stats over past week on dashboard overview
+    const lastSevenDays = new Date();
+    lastSevenDays.setDate(lastSevenDays.getDate() - 7);
+    
+
+    const recentTransactions = transactions.filter( t =>
+        new Date(t.date) >= lastSevenDays
+    );
+
+    //Obtaining the total cost and number of transactions
+    const total = recentTransactions.reduce((sum, t) => sum + t.amount, 0);
+    const count = recentTransactions.length;
+
+    return { total, count, transactions: recentTransactions};
+}
+
 export function sortTransactions(transactions, sortBy){
     //Functions enables sorting in ascending order
     const sorted = [...transactions];

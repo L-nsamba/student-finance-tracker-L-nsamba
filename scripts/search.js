@@ -71,8 +71,8 @@ export function setupSearch(transactions, renderFunction){
 }
 
 export const financeRegexPatterns = {
-    //This shows how I used advanced regex patterns with backreferencing
-    //This code is not currently called anywhere
+    //Advanced regex pattern with backreferencing
+    //Currently working on where to incorporate it in my app
     hasDecimals: /\.\d{2}\b/,
     foodKeywords: /(latte|coffee|tea|dinner|lunch|breakfast|snack)/i,
     duplicateWords: /\b(\w+)\s+\1\b/i,
